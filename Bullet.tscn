@@ -1,0 +1,39 @@
+[gd_scene load_steps=8 format=2]
+
+[ext_resource path="res://Player Laser/laserRed08.png" type="Texture" id=2]
+[ext_resource path="res://Player Laser/laserRed11.png" type="Texture" id=3]
+[ext_resource path="res://Player Laser/laserRed10.png" type="Texture" id=4]
+[ext_resource path="res://Player Laser/laserRed09.png" type="Texture" id=5]
+
+[sub_resource type="CircleShape2D" id=1]
+radius = 15.2315
+
+[sub_resource type="CircleShape2D" id=2]
+radius = 20.9176
+
+[sub_resource type="SpriteFrames" id=3]
+animations = [ {
+"frames": [ ExtResource( 2 ), ExtResource( 5 ), ExtResource( 4 ), ExtResource( 3 ) ],
+"loop": true,
+"name": "default",
+"speed": 30.0
+} ]
+
+[node name="BulletBody" type="RigidBody2D"]
+position = Vector2( 627.21, -144.792 )
+collision_layer = 2
+collision_mask = 2
+gravity_scale = 0.0
+
+[node name="BulletCollisionShape" type="CollisionShape2D" parent="."]
+shape = SubResource( 1 )
+
+[node name="BulletBodyArea" type="Area2D" parent="."]
+
+[node name="BulletBodyAreaCollision" type="CollisionShape2D" parent="BulletBodyArea"]
+position = Vector2( 1.10803, 2.21606 )
+shape = SubResource( 2 )
+
+[node name="AnimatedSprite" type="AnimatedSprite" parent="."]
+frames = SubResource( 3 )
+playing = true

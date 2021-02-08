@@ -1,14 +1,21 @@
 extends Node2D
 
+signal bullet_has_collided_with_enemy
+signal enemy_has_collided_with_player
+
 var SHIP_SHOOT_DELAY_ACTIVE = false
 var DELAY_BETWEEN_SHOTS = 0.5
+var SCREEN_WIDTH = ProjectSettings.get_setting("display/window/size/width")
+var SCREEN_HEIGHT = ProjectSettings.get_setting("display/window/size/height")
 
-# Called when the node enters the scene tree for the first time.
 func _ready():
-	print("### STARTING ENEMY TIMER")
+	randomize()
 	$EnemyTimer.start()
 	
 func _process(delta):
+	if $ShipBody.visible == false:
+		return
+	
 	if Input.is_action_pressed("ui_accept") and SHIP_SHOOT_DELAY_ACTIVE == false:
 		SHIP_SHOOT_DELAY_ACTIVE = true
 		
@@ -27,12 +34,22 @@ func _process(delta):
 
 		SHIP_SHOOT_DELAY_ACTIVE = false
 
+func _on_bullet_has_collided_with_enemy(area):
+	self.remove_child(area.get_parent())
+
+func _on_enemy_has_collided_with_player(area):
+
+	$ShipBody._on_enemy_has_collided_with_player(area)
+
 func _on_EnemyTimer_timeout():
-	var new_enemy = $EnemyBody.duplicate()
+	var new_enemy = $EnemyBody.duplicate() 
 	add_child(new_enemy)
-	new_enemy.position.y = 70
+	new_enemy.connect("bullet_has_collided_with_enemy", self, "_on_bullet_has_collided_with_enemy")
+	new_enemy.connect("enemy_has_collided_with_player", self, "_on_enemy_has_collided_with_player")
+	new_enemy.global_position = Vector2(SCREEN_WIDTH, rand_range(10, 500))
 	new_enemy.linear_velocity = Vector2(-500, 0)
 
-func _on_EnemyBodyArea_area_entered(area):
-	if area.name == "ShipBodyArea":
-		$ShipBody.visible = false
+func _on_BackgroundTimer_timeout():
+	# TODO: Make this bounce back after one full cycle
+	var current_pos = $ParallaxBackground/ParallaxLayer/TextureRect.rect_position
+	$ParallaxBackground/ParallaxLayer/TextureRect.set_position(Vector2(current_pos.x - 1, current_pos.y))

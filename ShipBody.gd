@@ -17,3 +17,9 @@ func _integrate_forces(state):
 		yield(get_tree().create_timer(DELAY_BETWEEN_BUMPS), "timeout")
 		SHIP_BUMP_DELAY_ACTIVE = false
 	
+
+func _on_enemy_has_collided_with_player(area):
+	$ExplosionSprite.visible = true
+	$ExplosionSprite.play("boom")
+	$ExplosionSprite.playing = true
+	$ShipSprite.visible = false
