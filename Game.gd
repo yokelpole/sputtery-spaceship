@@ -8,9 +8,12 @@ var DELAY_BETWEEN_SHOTS = 0.5
 var SCREEN_WIDTH = ProjectSettings.get_setting("display/window/size/width")
 var SCREEN_HEIGHT = ProjectSettings.get_setting("display/window/size/height")
 
+var background_updates = 0
+
 func _ready():
 	randomize()
 	$EnemyTimer.start()
+	$AsteroidTimer.start()
 	
 func _process(delta):
 	if $ShipBody.visible == false:
@@ -38,7 +41,6 @@ func _on_bullet_has_collided_with_enemy(area):
 	self.remove_child(area.get_parent())
 
 func _on_enemy_has_collided_with_player(area):
-
 	$ShipBody._on_enemy_has_collided_with_player(area)
 
 func _on_EnemyTimer_timeout():
@@ -50,6 +52,17 @@ func _on_EnemyTimer_timeout():
 	new_enemy.linear_velocity = Vector2(-500, 0)
 
 func _on_BackgroundTimer_timeout():
-	# TODO: Make this bounce back after one full cycle
 	var current_pos = $ParallaxBackground/ParallaxLayer/TextureRect.rect_position
-	$ParallaxBackground/ParallaxLayer/TextureRect.set_position(Vector2(current_pos.x - 1, current_pos.y))
+	if background_updates == 402:
+		background_updates = 0
+		$ParallaxBackground/ParallaxLayer/TextureRect.set_position(Vector2(current_pos.x + 402, current_pos.y))
+	else:
+		background_updates = background_updates + 1
+		$ParallaxBackground/ParallaxLayer/TextureRect.set_position(Vector2(current_pos.x - 1, current_pos.y))
+
+func _on_AsteroidTimer_timeout():
+	var new_asteroid = $AsteroidBody.duplicate()
+	add_child(new_asteroid)
+	new_asteroid.global_position = Vector2(SCREEN_WIDTH, rand_range(10, 500))
+	new_asteroid.linear_velocity = Vector2(-200, 0)
+	new_asteroid.angular_velocity = 2.5

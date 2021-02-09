@@ -15,7 +15,7 @@
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 39.1575, 51.4731 )
 
-[sub_resource type="SpriteFrames" id=3]
+[sub_resource type="SpriteFrames" id=2]
 animations = [ {
 "frames": [ ExtResource( 11 ), ExtResource( 6 ), ExtResource( 9 ), ExtResource( 10 ), ExtResource( 7 ), ExtResource( 5 ), ExtResource( 4 ), ExtResource( 3 ), ExtResource( 8 ) ],
 "loop": false,
@@ -23,7 +23,7 @@ animations = [ {
 "speed": 30.0
 } ]
 
-[sub_resource type="RectangleShape2D" id=2]
+[sub_resource type="RectangleShape2D" id=3]
 extents = Vector2( 38.6698, 50.9887 )
 
 [node name="ShipBody" type="RigidBody2D"]
@@ -44,7 +44,7 @@ texture = ExtResource( 2 )
 [node name="ExplosionSprite" type="AnimatedSprite" parent="."]
 visible = false
 position = Vector2( 101.424, 38.1302 )
-frames = SubResource( 3 )
+frames = SubResource( 2 )
 animation = "boom"
 speed_scale = 3.0
 
@@ -52,4 +52,4 @@ speed_scale = 3.0
 
 [node name="ShipBodyAreaCollision" type="CollisionShape2D" parent="ShipBodyArea"]
 position = Vector2( 100.831, 36.5651 )
-shape = SubResource( 2 )
+shape = SubResource( 3 )
