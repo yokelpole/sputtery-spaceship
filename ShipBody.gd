@@ -1,13 +1,11 @@
 extends RigidBody2D
 
-var SHIP_BUMP_POWER_Y = -125
-var SHIP_BUMP_TORQUE_POWER = -3300
+var SHIP_BUMP_POWER_Y = -500
+var SHIP_BUMP_TORQUE_POWER = -10000
 var DELAY_BETWEEN_BUMPS = 0.50
 var SHIP_BUMP_DELAY_ACTIVE = false
 
-# Called when the node enters the scene tree for the first time.
-func _ready():
-	pass # Replace with function body.
+onready var ship_collision_shape = $ShipCollisionShape
 
 func _integrate_forces(state):
 	if Input.is_action_pressed("ui_up") and SHIP_BUMP_DELAY_ACTIVE == false:
@@ -22,3 +20,4 @@ func _on_enemy_has_collided_with_player(area):
 	$ExplosionSprite.play("boom")
 	$ExplosionSprite.playing = true
 	$ShipSprite.visible = false
+	queue_free()

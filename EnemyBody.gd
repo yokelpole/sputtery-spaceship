@@ -5,11 +5,10 @@ var has_been_hit = false
 signal bullet_has_collided_with_enemy
 signal enemy_has_collided_with_player
 
-# Called when the node enters the scene tree for the first time.
-func _ready():
-	pass # Replace with function body.
-
 func on_enemy_collision():
+	if $EnemySprite == null:
+		return
+	
 	if has_been_hit == false:
 		gravity_scale = 5.0
 		linear_velocity.x = -250
@@ -19,7 +18,6 @@ func on_enemy_collision():
 		$ExplosionSprite.play("boom")
 		$ExplosionSprite.playing = true
 		$EnemySprite.visible = false
-		# self.remove_and_skip()
 
 func _on_EnemyBodyArea_area_entered(area):
 	if area.name == "ShipBodyArea":
@@ -32,7 +30,5 @@ func _on_EnemyBodyArea_area_entered(area):
 	if area.name == "EnemyBodyArea":
 		on_enemy_collision()
 
-
 func _on_ExplosionSprite_animation_finished():
-	# remove_and_skip()
-	pass
+	queue_free()
