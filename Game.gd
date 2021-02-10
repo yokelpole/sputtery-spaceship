@@ -15,14 +15,12 @@ var player = null
 
 func _ready():
 	randomize()
-	$EnemyTimer.start()
-	$AsteroidTimer.start()
-	player = Player.instance()
-	add_child(player)
 	
 func _process(_delta):
-	if player.visible == false:
+	if is_instance_valid(player) != true:
 		return
+	
+	$HudNode/Score.text = "SCORE: " + str(player.score)
 	
 	if Input.is_action_pressed("ui_accept") and SHIP_SHOOT_DELAY_ACTIVE == false:
 		SHIP_SHOOT_DELAY_ACTIVE = true
@@ -42,17 +40,30 @@ func _process(_delta):
 
 		SHIP_SHOOT_DELAY_ACTIVE = false
 
+func on_player_dead():
+	$EnemyTimer.stop()
+	$AsteroidTimer.stop()
+	$ScoreTimer.stop()
+	$TitleTextNode.visible = true
+	$HudNode.visible = false
+
 func _on_bullet_has_collided_with_enemy(area):
+	player.score = player.score + 10
 	remove_child(area.get_parent())
 
 func _on_asteroid_has_collided_with_enemy(area):
 	area.get_parent().on_enemy_collision()
 
+func _on_asteroid_has_collided_with_bullet(area):
+	area.get_parent().queue_free()
+
 func _on_enemy_has_collided_with_player(area):
 	player._on_enemy_has_collided_with_player(area)
+	on_player_dead()
 
 func _on_asteroid_has_collided_with_player(area):
 	player._on_enemy_has_collided_with_player(area)
+	on_player_dead()
 
 func _on_EnemyTimer_timeout():
 	var new_enemy = Enemy.instance()
@@ -69,7 +80,8 @@ func _on_AsteroidTimer_timeout():
 	new_asteroid.linear_velocity = Vector2(-200, 0)
 	new_asteroid.connect("asteroid_has_collided_with_player", self, "_on_asteroid_has_collided_with_player")
 	new_asteroid.connect("asteroid_has_collided_with_enemy", self, "_on_asteroid_has_collided_with_enemy")
-	new_asteroid.angular_velocity = 2.5
+	new_asteroid.connect("asteroid_has_collided_with_bullet", self, "_on_asteroid_has_collided_with_bullet")
+	# new_asteroid.angular_velocity = 2.5
 
 func _on_BackgroundTimer_timeout():
 	var current_pos = $ParallaxBackground/ParallaxLayer/TextureRect.rect_position
@@ -79,3 +91,25 @@ func _on_BackgroundTimer_timeout():
 	else:
 		background_updates = background_updates + 1
 		$ParallaxBackground/ParallaxLayer/TextureRect.set_position(Vector2(current_pos.x - 1, current_pos.y))
+
+func _on_TitleText_gui_input(event):
+	if event is InputEventMouseButton:
+		$EnemyTimer.start()
+		$AsteroidTimer.start()
+		$ScoreTimer.start()
+		player = Player.instance()
+		add_child(player)
+		$TitleTextNode.visible = false
+		$HudNode.visible = true
+
+func _on_ScoreTimer_timeout():
+	player.score = player.score + 1
+
+
+func _on_PlanetArea2D_area_entered(area):
+	if area.name == "EnemyBodyArea":
+		area.get_parent().has_been_hit = true
+		area.get_parent().on_enemy_collision()
+	if area.name == "PlayerBodyArea":	
+		player._on_enemy_has_collided_with_player(area)
+		on_player_dead()

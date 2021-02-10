@@ -27,7 +27,7 @@ extents = Vector2( 36.5151, 41.1046 )
 extents = Vector2( 40.7125, 46.729 )
 
 [node name="EnemyBody" type="RigidBody2D"]
-position = Vector2( -531.018, 79.7004 )
+position = Vector2( 7.48187, 13.1676 )
 collision_layer = 3
 collision_mask = 2
 script = ExtResource( 1 )

@@ -1,7 +1,22 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=8 format=2]
 
+[ext_resource path="res://Montserrat-Bold.ttf" type="DynamicFontData" id=1]
+[ext_resource path="res://Earth.png" type="Texture" id=2]
 [ext_resource path="res://Game.gd" type="Script" id=4]
 [ext_resource path="res://beautiful-blue-stars-fill.jpg" type="Texture" id=20]
+
+[sub_resource type="DynamicFont" id=1]
+size = 96
+use_filter = true
+font_data = ExtResource( 1 )
+
+[sub_resource type="DynamicFont" id=2]
+size = 48
+use_filter = true
+font_data = ExtResource( 1 )
+
+[sub_resource type="CircleShape2D" id=3]
+radius = 600.011
 
 [node name="Game" type="Node2D"]
 script = ExtResource( 4 )
@@ -15,6 +30,8 @@ autostart = true
 
 [node name="AsteroidTimer" type="Timer" parent="."]
 wait_time = 2.5
+
+[node name="ScoreTimer" type="Timer" parent="."]
 
 [node name="ParallaxBackground" type="ParallaxBackground" parent="."]
 scroll_limit_end = Vector2( 800000, 7e+06 )
@@ -33,6 +50,62 @@ stretch_mode = 2
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="TitleTextNode" type="Node2D" parent="."]
+z_index = 10
+
+[node name="TitleText" type="RichTextLabel" parent="TitleTextNode"]
+margin_left = 45.0
+margin_top = 33.0
+margin_right = 974.0
+margin_bottom = 558.0
+custom_fonts/normal_font = SubResource( 1 )
+text = "SPUTTERING 
+SPACESHIP
+CLICK TO START"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HudNode" type="Node2D" parent="."]
+visible = false
+z_index = 10
+
+[node name="Score" type="RichTextLabel" parent="HudNode"]
+margin_left = 597.0
+margin_top = 22.0
+margin_right = 996.0
+margin_bottom = 91.0
+custom_fonts/normal_font = SubResource( 2 )
+text = "SCORE: "
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="PlanetNode" type="RigidBody2D" parent="."]
+position = Vector2( 532.002, 1116 )
+z_index = 1
+collision_layer = 4
+collision_mask = 4
+mass = 0.00102041
+gravity_scale = 0.0
+angular_velocity = 0.25
+angular_damp = 0.0
+
+[node name="PlanetSprite" type="Sprite" parent="PlanetNode"]
+z_as_relative = false
+texture = ExtResource( 2 )
+
+[node name="PlanetArea2D" type="Area2D" parent="PlanetNode"]
+
+[node name="PlanetAreaCollisionShape" type="CollisionShape2D" parent="PlanetNode/PlanetArea2D"]
+shape = SubResource( 3 )
+
+[node name="PlanetCollisionShape" type="CollisionShape2D" parent="PlanetNode"]
+shape = SubResource( 3 )
 [connection signal="timeout" from="EnemyTimer" to="." method="_on_EnemyTimer_timeout"]
 [connection signal="timeout" from="BackgroundTimer" to="." method="_on_BackgroundTimer_timeout"]
 [connection signal="timeout" from="AsteroidTimer" to="." method="_on_AsteroidTimer_timeout"]
+[connection signal="timeout" from="ScoreTimer" to="." method="_on_ScoreTimer_timeout"]
+[connection signal="gui_input" from="TitleTextNode/TitleText" to="." method="_on_TitleText_gui_input"]
+[connection signal="area_entered" from="PlanetNode/PlanetArea2D" to="." method="_on_PlanetArea2D_area_entered"]
