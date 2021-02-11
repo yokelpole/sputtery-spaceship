@@ -106,3 +106,15 @@ func _on_PlanetArea2D_area_entered(area):
 	if area.name == "PlayerBodyArea":	
 		player._on_enemy_has_collided_with_player(area)
 		on_player_dead()
+
+func _on_LeftTouchscreenButton_pressed():
+	if is_instance_valid(player) != true:
+		return
+	
+	player.bump()
+
+func _on_RightTouchscreenButton_pressed():
+	if is_instance_valid(player) != true:
+		return
+		
+	player.shoot()

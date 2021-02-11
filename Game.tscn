@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://Montserrat-Bold.ttf" type="DynamicFontData" id=1]
 [ext_resource path="res://Earth.png" type="Texture" id=2]
@@ -17,6 +17,12 @@ font_data = ExtResource( 1 )
 
 [sub_resource type="CircleShape2D" id=3]
 radius = 600.011
+
+[sub_resource type="RectangleShape2D" id=4]
+extents = Vector2( 250, 300 )
+
+[sub_resource type="RectangleShape2D" id=5]
+extents = Vector2( 250, 300 )
 
 [node name="Game" type="Node2D"]
 script = ExtResource( 4 )
@@ -103,9 +109,18 @@ shape = SubResource( 3 )
 
 [node name="PlanetCollisionShape" type="CollisionShape2D" parent="PlanetNode"]
 shape = SubResource( 3 )
+
+[node name="LeftTouchscreenButton" type="TouchScreenButton" parent="."]
+shape = SubResource( 4 )
+
+[node name="RightTouchscreenButton" type="TouchScreenButton" parent="."]
+position = Vector2( 518.028, 0 )
+shape = SubResource( 5 )
 [connection signal="timeout" from="EnemyTimer" to="." method="_on_EnemyTimer_timeout"]
 [connection signal="timeout" from="BackgroundTimer" to="." method="_on_BackgroundTimer_timeout"]
 [connection signal="timeout" from="AsteroidTimer" to="." method="_on_AsteroidTimer_timeout"]
 [connection signal="timeout" from="ScoreTimer" to="." method="_on_ScoreTimer_timeout"]
 [connection signal="gui_input" from="TitleTextNode/TitleText" to="." method="_on_TitleText_gui_input"]
 [connection signal="area_entered" from="PlanetNode/PlanetArea2D" to="." method="_on_PlanetArea2D_area_entered"]
+[connection signal="pressed" from="LeftTouchscreenButton" to="." method="_on_LeftTouchscreenButton_pressed"]
+[connection signal="pressed" from="RightTouchscreenButton" to="." method="_on_RightTouchscreenButton_pressed"]
