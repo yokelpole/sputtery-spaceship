@@ -28,7 +28,7 @@ gravity_scale = 0.0
 [node name="AnimatedSprite" type="AnimatedSprite" parent="."]
 position = Vector2( 0, 1 )
 frames = SubResource( 1 )
-frame = 3
+frame = 2
 playing = true
 
 [node name="BulletCollisionShape" type="CollisionShape2D" parent="."]

@@ -20,7 +20,7 @@ func on_enemy_collision():
 		$EnemySprite.visible = false
 
 func _on_EnemyBodyArea_area_entered(area):
-	if area.name == "ShipBodyArea":
+	if area.name == "PlayerBodyArea":
 		emit_signal("enemy_has_collided_with_player", area)
 	if area.name == "BulletBodyArea":
 		emit_signal("bullet_has_collided_with_enemy", area)
