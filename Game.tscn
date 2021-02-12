@@ -1,9 +1,14 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://Montserrat-Bold.ttf" type="DynamicFontData" id=1]
 [ext_resource path="res://Earth.png" type="Texture" id=2]
 [ext_resource path="res://Game.gd" type="Script" id=4]
 [ext_resource path="res://beautiful-blue-stars-fill.jpg" type="Texture" id=20]
+
+[sub_resource type="NavigationPolygon" id=6]
+vertices = PoolVector2Array( 1152.51, 5.10138, 1158.21, 578.904, 6.80118, 578.904, 8.70117, 7.0014 )
+polygons = [ PoolIntArray( 0, 1, 2, 3 ) ]
+outlines = [ PoolVector2Array( 8.70117, 7.0014, 6.80118, 578.904, 1158.21, 578.904, 1152.51, 5.10138 ) ]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 250, 300 )
@@ -27,8 +32,16 @@ radius = 600.011
 [node name="Game" type="Node2D"]
 script = ExtResource( 4 )
 
+[node name="Navigation2D" type="Navigation2D" parent="."]
+
+[node name="NavigationPolygonInstance" type="NavigationPolygonInstance" parent="Navigation2D"]
+navpoly = SubResource( 6 )
+
 [node name="EnemyTimer" type="Timer" parent="."]
 wait_time = 0.75
+
+[node name="SmarterEnemyTimer" type="Timer" parent="."]
+wait_time = 2.5
 
 [node name="BackgroundTimer" type="Timer" parent="."]
 wait_time = 0.001
@@ -133,6 +146,7 @@ shape = SubResource( 5 )
 [node name="PlanetCollisionShape" type="CollisionShape2D" parent="PlanetNode"]
 shape = SubResource( 5 )
 [connection signal="timeout" from="EnemyTimer" to="." method="_on_EnemyTimer_timeout"]
+[connection signal="timeout" from="SmarterEnemyTimer" to="." method="_on_SmarterEnemyTimer_timeout"]
 [connection signal="timeout" from="BackgroundTimer" to="." method="_on_BackgroundTimer_timeout"]
 [connection signal="timeout" from="AsteroidTimer" to="." method="_on_AsteroidTimer_timeout"]
 [connection signal="timeout" from="ScoreTimer" to="." method="_on_ScoreTimer_timeout"]

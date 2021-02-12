@@ -17,7 +17,7 @@
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 39.1575, 51.4731 )
 
-[sub_resource type="SpriteFrames" id=4]
+[sub_resource type="SpriteFrames" id=2]
 animations = [ {
 "frames": [ ExtResource( 12 ), ExtResource( 13 ) ],
 "loop": true,
@@ -25,7 +25,7 @@ animations = [ {
 "speed": 10.0
 } ]
 
-[sub_resource type="SpriteFrames" id=2]
+[sub_resource type="SpriteFrames" id=3]
 animations = [ {
 "frames": [ ExtResource( 11 ), ExtResource( 6 ), ExtResource( 9 ), ExtResource( 10 ), ExtResource( 7 ), ExtResource( 5 ), ExtResource( 4 ), ExtResource( 3 ), ExtResource( 8 ) ],
 "loop": false,
@@ -33,7 +33,7 @@ animations = [ {
 "speed": 5.0
 } ]
 
-[sub_resource type="RectangleShape2D" id=3]
+[sub_resource type="RectangleShape2D" id=4]
 extents = Vector2( 38.6698, 50.9887 )
 
 [node name="PlayerBody" type="RigidBody2D"]
@@ -66,7 +66,7 @@ texture = ExtResource( 2 )
 visible = false
 position = Vector2( -0.790695, 47.8104 )
 rotation = 3.14159
-frames = SubResource( 4 )
+frames = SubResource( 2 )
 animation = "rocket"
 frame = 1
 playing = true
@@ -74,7 +74,7 @@ playing = true
 [node name="ExplosionSprite" type="AnimatedSprite" parent="."]
 visible = false
 position = Vector2( 101.424, 38.1302 )
-frames = SubResource( 2 )
+frames = SubResource( 3 )
 animation = "boom"
 speed_scale = 3.0
 
@@ -82,7 +82,7 @@ speed_scale = 3.0
 
 [node name="PlayerBodyAreaCollision" type="CollisionShape2D" parent="PlayerBodyArea"]
 position = Vector2( 100.831, 36.5651 )
-shape = SubResource( 3 )
+shape = SubResource( 4 )
 
 [node name="BlinkingTimer" type="Timer" parent="."]
 process_mode = 0

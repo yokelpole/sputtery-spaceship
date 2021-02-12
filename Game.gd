@@ -5,6 +5,7 @@ var SCREEN_HEIGHT = ProjectSettings.get_setting("display/window/size/height")
 
 var Player = preload("res://Player.tscn")
 var Enemy = preload("res://Enemy.tscn")
+var SmarterEnemy = preload("res://SmarterEnemy.tscn")
 var Asteroid = preload("res://Asteroid.tscn")
 var Bullet = preload("res://Bullet.tscn")
 
@@ -41,6 +42,7 @@ func start_game():
 	$HudNode/Score.bbcode_text = "[right]SCORE: 0[/right]"
 	
 	$EnemyTimer.start()
+	$SmarterEnemyTimer.start()
 	$AsteroidTimer.start()
 	$ScoreTimer.start()
 
@@ -52,6 +54,7 @@ func cleanup_previous_game():
 func on_game_over():
 	end_score = player.score
 	$EnemyTimer.stop()
+	$SmarterEnemyTimer.stop()
 	$AsteroidTimer.stop()
 	$ScoreTimer.stop()
 	$GameOverTextNode/GameOverText.text = "GAME OVER\nSCORE: " + str(end_score) + "\n\nTRY AGAIN?" 
@@ -107,6 +110,15 @@ func _on_EnemyTimer_timeout():
 	new_enemy.connect("enemy_has_collided_with_player", self, "_on_enemy_has_collided_with_player")
 	new_enemy.global_position = Vector2(SCREEN_WIDTH, rand_range(10, 500))
 	new_enemy.linear_velocity = Vector2(-500, 0)
+
+func _on_SmarterEnemyTimer_timeout():
+	var new_enemy = SmarterEnemy.instance()
+	add_child(new_enemy)
+	new_enemy.add_to_group("instance")
+	new_enemy.connect("bullet_has_collided_with_enemy", self, "_on_bullet_has_collided_with_enemy")
+	new_enemy.connect("enemy_has_collided_with_player", self, "_on_enemy_has_collided_with_player")
+	new_enemy.global_position = Vector2(SCREEN_WIDTH, rand_range(10, 500))
+	new_enemy.path = $Navigation2D.get_simple_path(player.position, new_enemy.position)
 
 func _on_AsteroidTimer_timeout():
 	var new_asteroid = Asteroid.instance()

@@ -1,0 +1,82 @@
+[gd_scene load_steps=22 format=2]
+
+[ext_resource path="res://SmarterEnemy.gd" type="Script" id=1]
+[ext_resource path="res://Simple explosion/simpleExplosion07.png" type="Texture" id=2]
+[ext_resource path="res://Simple explosion/simpleExplosion05.png" type="Texture" id=3]
+[ext_resource path="res://Simple explosion/simpleExplosion02.png" type="Texture" id=4]
+[ext_resource path="res://Simple explosion/simpleExplosion04.png" type="Texture" id=5]
+[ext_resource path="res://Simple explosion/simpleExplosion08.png" type="Texture" id=6]
+[ext_resource path="res://Simple explosion/simpleExplosion01.png" type="Texture" id=7]
+[ext_resource path="res://Simple explosion/simpleExplosion06.png" type="Texture" id=8]
+[ext_resource path="res://Simple explosion/simpleExplosion03.png" type="Texture" id=9]
+[ext_resource path="res://enemyRed2.png" type="Texture" id=10]
+[ext_resource path="res://Simple explosion/simpleExplosion00.png" type="Texture" id=11]
+[ext_resource path="res://Smoke/smokeGrey3.png" type="Texture" id=12]
+[ext_resource path="res://Smoke/smokeGrey2.png" type="Texture" id=13]
+[ext_resource path="res://Smoke/smokeGrey0.png" type="Texture" id=14]
+[ext_resource path="res://Smoke/smokeGrey4.png" type="Texture" id=15]
+[ext_resource path="res://Smoke/smokeGrey5.png" type="Texture" id=16]
+[ext_resource path="res://Smoke/smokeGrey1.png" type="Texture" id=17]
+
+[sub_resource type="SpriteFrames" id=1]
+animations = [ {
+"frames": [ ExtResource( 14 ), ExtResource( 17 ), ExtResource( 13 ), ExtResource( 12 ), ExtResource( 15 ), ExtResource( 16 ) ],
+"loop": true,
+"name": "smoke",
+"speed": 5.0
+} ]
+
+[sub_resource type="SpriteFrames" id=2]
+animations = [ {
+"frames": [ ExtResource( 11 ), ExtResource( 7 ), ExtResource( 4 ), ExtResource( 9 ), ExtResource( 5 ), ExtResource( 3 ), ExtResource( 8 ), ExtResource( 2 ), ExtResource( 6 ) ],
+"loop": false,
+"name": "boom",
+"speed": 5.0
+} ]
+
+[sub_resource type="RectangleShape2D" id=3]
+extents = Vector2( 42.9745, 52.2378 )
+
+[sub_resource type="RectangleShape2D" id=4]
+extents = Vector2( 44.116, 53.5197 )
+
+[node name="EnemyBody" type="RigidBody2D"]
+position = Vector2( 7.48187, 13.1676 )
+collision_layer = 3
+collision_mask = 2
+script = ExtResource( 1 )
+
+[node name="EnemySprite" type="Sprite" parent="."]
+position = Vector2( 37.8408, 35.2358 )
+rotation = 1.5708
+texture = ExtResource( 10 )
+
+[node name="SmokeSprite" type="AnimatedSprite" parent="EnemySprite"]
+visible = false
+position = Vector2( -1.22194, -51.2557 )
+rotation = -1.5708
+frames = SubResource( 1 )
+animation = "smoke"
+frame = 5
+playing = true
+
+[node name="ExplosionSprite" type="AnimatedSprite" parent="."]
+visible = false
+position = Vector2( 37.8408, 35.2358 )
+frames = SubResource( 2 )
+animation = "boom"
+speed_scale = 3.0
+
+[node name="EnemyCollisionShape" type="CollisionShape2D" parent="."]
+visible = false
+position = Vector2( 37.36, 35.8234 )
+shape = SubResource( 3 )
+
+[node name="EnemyBodyArea" type="Area2D" parent="."]
+visible = false
+
+[node name="EnemyBodyAreaCollision" type="CollisionShape2D" parent="EnemyBodyArea"]
+position = Vector2( 37.7262, 35.5823 )
+shape = SubResource( 4 )
+[connection signal="animation_finished" from="ExplosionSprite" to="." method="_on_ExplosionSprite_animation_finished"]
+[connection signal="area_entered" from="EnemyBodyArea" to="." method="_on_EnemyBodyArea_area_entered"]
