@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=2]
+[gd_scene load_steps=22 format=2]
 
 [ext_resource path="res://EnemyBody.gd" type="Script" id=1]
 [ext_resource path="res://Simple explosion/simpleExplosion07.png" type="Texture" id=2]
@@ -11,6 +11,20 @@
 [ext_resource path="res://Simple explosion/simpleExplosion02.png" type="Texture" id=9]
 [ext_resource path="res://Simple explosion/simpleExplosion03.png" type="Texture" id=10]
 [ext_resource path="res://Simple explosion/simpleExplosion00.png" type="Texture" id=11]
+[ext_resource path="res://Smoke/smokeGrey3.png" type="Texture" id=12]
+[ext_resource path="res://Smoke/smokeGrey0.png" type="Texture" id=13]
+[ext_resource path="res://Smoke/smokeGrey2.png" type="Texture" id=14]
+[ext_resource path="res://Smoke/smokeGrey4.png" type="Texture" id=15]
+[ext_resource path="res://Smoke/smokeGrey5.png" type="Texture" id=16]
+[ext_resource path="res://Smoke/smokeGrey1.png" type="Texture" id=17]
+
+[sub_resource type="SpriteFrames" id=4]
+animations = [ {
+"frames": [ ExtResource( 13 ), ExtResource( 17 ), ExtResource( 14 ), ExtResource( 12 ), ExtResource( 15 ), ExtResource( 16 ) ],
+"loop": true,
+"name": "smoke",
+"speed": 5.0
+} ]
 
 [sub_resource type="SpriteFrames" id=1]
 animations = [ {
@@ -21,10 +35,10 @@ animations = [ {
 } ]
 
 [sub_resource type="RectangleShape2D" id=2]
-extents = Vector2( 36.5151, 41.1046 )
+extents = Vector2( 40.9918, 45.4935 )
 
 [sub_resource type="RectangleShape2D" id=3]
-extents = Vector2( 40.7125, 46.729 )
+extents = Vector2( 45.2341, 47.3261 )
 
 [node name="EnemyBody" type="RigidBody2D"]
 position = Vector2( 7.48187, 13.1676 )
@@ -37,6 +51,15 @@ position = Vector2( 37.8408, 35.2358 )
 rotation = 1.5708
 texture = ExtResource( 5 )
 
+[node name="SmokeSprite" type="AnimatedSprite" parent="EnemySprite"]
+visible = false
+position = Vector2( -1.22194, -51.2557 )
+rotation = -1.5708
+frames = SubResource( 4 )
+animation = "smoke"
+frame = 2
+playing = true
+
 [node name="ExplosionSprite" type="AnimatedSprite" parent="."]
 visible = false
 position = Vector2( 37.8408, 35.2358 )
@@ -45,10 +68,12 @@ animation = "boom"
 speed_scale = 3.0
 
 [node name="EnemyCollisionShape" type="CollisionShape2D" parent="."]
-position = Vector2( 35.7356, 34.1832 )
+visible = false
+position = Vector2( 38.36, 35.8234 )
 shape = SubResource( 2 )
 
 [node name="EnemyBodyArea" type="Area2D" parent="."]
+visible = false
 
 [node name="EnemyBodyAreaCollision" type="CollisionShape2D" parent="EnemyBodyArea"]
 position = Vector2( 37.7262, 36.3438 )

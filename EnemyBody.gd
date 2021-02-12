@@ -10,6 +10,7 @@ func on_enemy_collision():
 		return
 	
 	if has_been_hit == false:
+		$EnemySprite/SmokeSprite.visible = true
 		gravity_scale = 5.0
 		linear_velocity.x = -250
 		has_been_hit = true
@@ -21,9 +22,9 @@ func on_enemy_collision():
 
 func _on_EnemyBodyArea_area_entered(area):
 	if area.name == "PlayerBodyArea":
-		emit_signal("enemy_has_collided_with_player", area)
+		call_deferred("emit_signal", "enemy_has_collided_with_player", area)
 	if area.name == "BulletBodyArea":
-		emit_signal("bullet_has_collided_with_enemy", area)
+		call_deferred("emit_signal", "bullet_has_collided_with_enemy", area)
 		on_enemy_collision()
 	if area.name == "AsteroidBodyArea":
 		on_enemy_collision()

@@ -1,7 +1,7 @@
 extends RigidBody2D
 
 var SHIP_BUMP_POWER_Y = -400
-var SHIP_BUMP_TORQUE_POWER = -2600
+var SHIP_BUMP_TORQUE_POWER = -2500
 var DELAY_BETWEEN_BUMPS = 0.25
 var DELAY_BETWEEN_SHOTS = 0.5
 var SHIP_BUMP_DELAY_ACTIVE = false
@@ -19,7 +19,7 @@ func shoot():
 		return
 		
 	SHIP_SHOOT_DELAY_ACTIVE = true
-	emit_signal("player_shoot_bullet")
+	call_deferred("emit_signal", "player_shoot_bullet")
 	yield(get_tree().create_timer(DELAY_BETWEEN_SHOTS), "timeout")
 	SHIP_SHOOT_DELAY_ACTIVE = false
 
@@ -30,6 +30,8 @@ func bump():
 	SHIP_BUMP_DELAY_ACTIVE = true
 	apply_impulse(Vector2(0, 0), Vector2(0, SHIP_BUMP_POWER_Y))
 	apply_torque_impulse(SHIP_BUMP_TORQUE_POWER)
+	$PlayerSprite/PlayerRocket.visible = true
+	$RocketTimer.start()
 	yield(get_tree().create_timer(DELAY_BETWEEN_BUMPS), "timeout")
 	SHIP_BUMP_DELAY_ACTIVE = false
 
@@ -66,3 +68,6 @@ func _on_DisabledTimer_timeout():
 
 func _on_BlinkingTimer_timeout():
 	$PlayerOverlaySprite.visible = !$PlayerOverlaySprite.visible
+
+func _on_RocketTimer_timeout():
+	$PlayerSprite/PlayerRocket.visible = false

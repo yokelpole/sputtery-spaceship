@@ -46,9 +46,9 @@ scroll_limit_end = Vector2( 800000, 7e+06 )
 position = Vector2( 199.446, 199.446 )
 
 [node name="TextureRect" type="TextureRect" parent="ParallaxBackground/ParallaxLayer"]
-margin_left = -198.0
+margin_left = -214.29
 margin_top = -205.0
-margin_right = 2329.0
+margin_right = 2312.71
 margin_bottom = 1213.0
 texture = ExtResource( 20 )
 expand = true
@@ -73,17 +73,31 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="GameOverTextNode" type="Node2D" parent="."]
+visible = false
+z_index = 10
+
+[node name="GameOverText" type="RichTextLabel" parent="GameOverTextNode"]
+margin_left = 45.0
+margin_top = 33.0
+margin_right = 974.0
+margin_bottom = 558.0
+custom_fonts/normal_font = SubResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
 [node name="HudNode" type="Node2D" parent="."]
 visible = false
 z_index = 10
 
 [node name="Score" type="RichTextLabel" parent="HudNode"]
-margin_left = 597.0
-margin_top = 22.0
-margin_right = 996.0
-margin_bottom = 91.0
+margin_right = 1005.0
+margin_bottom = 72.0
 custom_fonts/normal_font = SubResource( 2 )
-text = "SCORE: "
+bbcode_enabled = true
+bbcode_text = "[right]SCORE: 0[/right]"
+text = "SCORE: 0"
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -121,6 +135,7 @@ shape = SubResource( 5 )
 [connection signal="timeout" from="AsteroidTimer" to="." method="_on_AsteroidTimer_timeout"]
 [connection signal="timeout" from="ScoreTimer" to="." method="_on_ScoreTimer_timeout"]
 [connection signal="gui_input" from="TitleTextNode/TitleText" to="." method="_on_TitleText_gui_input"]
+[connection signal="gui_input" from="GameOverTextNode/GameOverText" to="." method="_on_TitleText_gui_input"]
 [connection signal="area_entered" from="PlanetNode/PlanetArea2D" to="." method="_on_PlanetArea2D_area_entered"]
 [connection signal="pressed" from="LeftTouchscreenButton" to="." method="_on_LeftTouchscreenButton_pressed"]
 [connection signal="pressed" from="RightTouchscreenButton" to="." method="_on_RightTouchscreenButton_pressed"]

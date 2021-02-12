@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=2]
+[gd_scene load_steps=18 format=2]
 
 [ext_resource path="res://ShipBody.gd" type="Script" id=1]
 [ext_resource path="res://playerShip1_red.png" type="Texture" id=2]
@@ -11,9 +11,19 @@
 [ext_resource path="res://Simple explosion/simpleExplosion02.png" type="Texture" id=9]
 [ext_resource path="res://Simple explosion/simpleExplosion03.png" type="Texture" id=10]
 [ext_resource path="res://Simple explosion/simpleExplosion00.png" type="Texture" id=11]
+[ext_resource path="res://Rocket Fire/fire06.png" type="Texture" id=12]
+[ext_resource path="res://Rocket Fire/fire07.png" type="Texture" id=13]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 39.1575, 51.4731 )
+
+[sub_resource type="SpriteFrames" id=4]
+animations = [ {
+"frames": [ ExtResource( 12 ), ExtResource( 13 ) ],
+"loop": true,
+"name": "rocket",
+"speed": 10.0
+} ]
 
 [sub_resource type="SpriteFrames" id=2]
 animations = [ {
@@ -52,6 +62,15 @@ position = Vector2( 99, 36 )
 rotation = 1.5708
 texture = ExtResource( 2 )
 
+[node name="PlayerRocket" type="AnimatedSprite" parent="PlayerSprite"]
+visible = false
+position = Vector2( -0.790695, 47.8104 )
+rotation = 3.14159
+frames = SubResource( 4 )
+animation = "rocket"
+frame = 1
+playing = true
+
 [node name="ExplosionSprite" type="AnimatedSprite" parent="."]
 visible = false
 position = Vector2( 101.424, 38.1302 )
@@ -72,6 +91,11 @@ wait_time = 0.1
 [node name="DisabledTimer" type="Timer" parent="."]
 process_mode = 0
 one_shot = true
+
+[node name="RocketTimer" type="Timer" parent="."]
+wait_time = 0.25
+one_shot = true
 [connection signal="animation_finished" from="ExplosionSprite" to="." method="_on_ExplosionSprite_animation_finished"]
 [connection signal="timeout" from="BlinkingTimer" to="." method="_on_BlinkingTimer_timeout"]
 [connection signal="timeout" from="DisabledTimer" to="." method="_on_DisabledTimer_timeout"]
+[connection signal="timeout" from="RocketTimer" to="." method="_on_RocketTimer_timeout"]

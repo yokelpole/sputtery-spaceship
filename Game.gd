@@ -9,6 +9,7 @@ var Asteroid = preload("res://Asteroid.tscn")
 var Bullet = preload("res://Bullet.tscn")
 
 var background_updates = 0
+var end_score = 0
 var player = null
 
 func _ready():
@@ -16,15 +17,40 @@ func _ready():
 	
 func _process(_delta):
 	if is_instance_valid(player) != true:
+		if Input.is_action_pressed("ui_accept"):
+			start_game()
 		return
 	
-	$HudNode/Score.text = "SCORE: " + str(player.score)
+	$HudNode/Score.bbcode_text = "[right]SCORE: " + str(player.score) + "[/right]"
+
+func start_game():
+	if is_instance_valid(player) == true:
+		return
 	
+	player = Player.instance()
+	$TitleTextNode.visible = false
+	$GameOverTextNode.visible = false
+	
+	yield(get_tree().create_timer(1), "timeout")
+	
+	add_child(player)
+	player.connect("player_shoot_bullet", self, "_on_player_shoot_bullet")
+
+	$HudNode.visible = true
+	$HudNode/Score.bbcode_text = "[right]SCORE: 0[/right]"
+	
+	$EnemyTimer.start()
+	$AsteroidTimer.start()
+	$ScoreTimer.start()
+
 func on_player_dead():
+	end_score = player.score
 	$EnemyTimer.stop()
 	$AsteroidTimer.stop()
 	$ScoreTimer.stop()
-	$TitleTextNode.visible = true
+	$GameOverTextNode/GameOverText.text = "GAME OVER\nSCORE: " + str(end_score) + "\n\nTRY AGAIN?" 
+	$HudNode/Score.bbcode_text = "[right]SCORE: 0[/right]"
+	$GameOverTextNode.visible = true
 	$HudNode.visible = false
 
 func _on_bullet_has_collided_with_enemy(area):
@@ -87,14 +113,7 @@ func _on_BackgroundTimer_timeout():
 
 func _on_TitleText_gui_input(event):
 	if event is InputEventMouseButton:
-		$EnemyTimer.start()
-		$AsteroidTimer.start()
-		$ScoreTimer.start()
-		player = Player.instance()
-		add_child(player)
-		player.connect("player_shoot_bullet", self, "_on_player_shoot_bullet")
-		$TitleTextNode.visible = false
-		$HudNode.visible = true
+		start_game()
 
 func _on_ScoreTimer_timeout():
 	player.score = player.score + 1
