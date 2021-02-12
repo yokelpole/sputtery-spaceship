@@ -24,15 +24,16 @@ func _process(_delta):
 	$HudNode/Score.bbcode_text = "[right]SCORE: " + str(player.score) + "[/right]"
 
 func start_game():
-	if is_instance_valid(player) == true:
+	# FIXME: Not reliable to check the title/gameover nodes
+	if $TitleTextNode.visible == false and $GameOverTextNode.visible == false:
 		return
 	
-	player = Player.instance()
 	$TitleTextNode.visible = false
 	$GameOverTextNode.visible = false
 	
 	yield(get_tree().create_timer(1), "timeout")
 	
+	player = Player.instance()
 	add_child(player)
 	player.connect("player_shoot_bullet", self, "_on_player_shoot_bullet")
 
@@ -67,11 +68,17 @@ func _on_asteroid_has_collided_with_bullet(area):
 	area.get_parent().queue_free()
 
 func _on_enemy_has_collided_with_player(area):
-	player._on_enemy_has_collided_with_player(area)
+	if is_instance_valid(player) != true:
+		return
+	
+	player._on_enemy_has_collided_with_player()
 	on_player_dead()
 
 func _on_asteroid_has_collided_with_player(area):
-	player._on_enemy_has_collided_with_player(area)
+	if is_instance_valid(player) != true:
+		return
+	
+	player._on_enemy_has_collided_with_player()
 	on_player_dead()
 	
 func _on_player_shoot_bullet():
@@ -80,7 +87,7 @@ func _on_player_shoot_bullet():
 	var ship_extents = player.collision_shape.shape.extents
 	var x_position = (player.position.x + ship_extents.x * 2) - player.rotation_degrees
 	var y_position = (player.position.y + ship_extents.y) + player.rotation_degrees * 4
-	new_bullet.position = Vector2(x_position, y_position)
+	new_bullet.position = Vector2(x_position + 20, y_position)
 	new_bullet.rotation_degrees = player.rotation_degrees
 	new_bullet.linear_velocity = Vector2(500, player.rotation_degrees * 16)
 	new_bullet.gravity_scale = 0
@@ -123,17 +130,14 @@ func _on_PlanetArea2D_area_entered(area):
 		area.get_parent().has_been_hit = true
 		area.get_parent().on_enemy_collision()
 	if area.name == "PlayerBodyArea":	
-		player._on_enemy_has_collided_with_player(area)
-		on_player_dead()
+		_on_enemy_has_collided_with_player(area)
 
 func _on_LeftTouchscreenButton_pressed():
 	if is_instance_valid(player) != true:
 		return
-	
 	player.bump()
 
 func _on_RightTouchscreenButton_pressed():
 	if is_instance_valid(player) != true:
 		return
-		
 	player.shoot()

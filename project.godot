@@ -22,9 +22,12 @@ run/main_scene="res://Game.tscn"
 
 window/size/height=577
 window/size/resizable=false
-window/dpi/allow_hidpi=true
 window/stretch/mode="2d"
 window/stretch/aspect="keep"
+
+[input_devices]
+
+pointing/emulate_touch_from_mouse=true
 
 [rendering]
 

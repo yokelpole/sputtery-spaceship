@@ -5,24 +5,24 @@
 [ext_resource path="res://Game.gd" type="Script" id=4]
 [ext_resource path="res://beautiful-blue-stars-fill.jpg" type="Texture" id=20]
 
-[sub_resource type="DynamicFont" id=1]
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 250, 300 )
+
+[sub_resource type="RectangleShape2D" id=2]
+extents = Vector2( 250, 300 )
+
+[sub_resource type="DynamicFont" id=3]
 size = 96
 use_filter = true
 font_data = ExtResource( 1 )
 
-[sub_resource type="DynamicFont" id=2]
+[sub_resource type="DynamicFont" id=4]
 size = 48
 use_filter = true
 font_data = ExtResource( 1 )
 
-[sub_resource type="CircleShape2D" id=3]
+[sub_resource type="CircleShape2D" id=5]
 radius = 600.011
-
-[sub_resource type="RectangleShape2D" id=4]
-extents = Vector2( 250, 300 )
-
-[sub_resource type="RectangleShape2D" id=5]
-extents = Vector2( 250, 300 )
 
 [node name="Game" type="Node2D"]
 script = ExtResource( 4 )
@@ -38,6 +38,15 @@ autostart = true
 wait_time = 2.5
 
 [node name="ScoreTimer" type="Timer" parent="."]
+
+[node name="LeftTouchscreenButton" type="TouchScreenButton" parent="."]
+z_index = 20
+shape = SubResource( 1 )
+
+[node name="RightTouchscreenButton" type="TouchScreenButton" parent="."]
+position = Vector2( 518.028, 0 )
+z_index = 20
+shape = SubResource( 2 )
 
 [node name="ParallaxBackground" type="ParallaxBackground" parent="."]
 scroll_limit_end = Vector2( 800000, 7e+06 )
@@ -65,7 +74,7 @@ margin_left = 45.0
 margin_top = 33.0
 margin_right = 974.0
 margin_bottom = 558.0
-custom_fonts/normal_font = SubResource( 1 )
+custom_fonts/normal_font = SubResource( 3 )
 text = "SPUTTERING 
 SPACESHIP
 CLICK TO START"
@@ -82,7 +91,7 @@ margin_left = 45.0
 margin_top = 33.0
 margin_right = 974.0
 margin_bottom = 558.0
-custom_fonts/normal_font = SubResource( 1 )
+custom_fonts/normal_font = SubResource( 3 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -94,7 +103,7 @@ z_index = 10
 [node name="Score" type="RichTextLabel" parent="HudNode"]
 margin_right = 1005.0
 margin_bottom = 72.0
-custom_fonts/normal_font = SubResource( 2 )
+custom_fonts/normal_font = SubResource( 4 )
 bbcode_enabled = true
 bbcode_text = "[right]SCORE: 0[/right]"
 text = "SCORE: 0"
@@ -119,23 +128,16 @@ texture = ExtResource( 2 )
 [node name="PlanetArea2D" type="Area2D" parent="PlanetNode"]
 
 [node name="PlanetAreaCollisionShape" type="CollisionShape2D" parent="PlanetNode/PlanetArea2D"]
-shape = SubResource( 3 )
+shape = SubResource( 5 )
 
 [node name="PlanetCollisionShape" type="CollisionShape2D" parent="PlanetNode"]
-shape = SubResource( 3 )
-
-[node name="LeftTouchscreenButton" type="TouchScreenButton" parent="."]
-shape = SubResource( 4 )
-
-[node name="RightTouchscreenButton" type="TouchScreenButton" parent="."]
-position = Vector2( 518.028, 0 )
 shape = SubResource( 5 )
 [connection signal="timeout" from="EnemyTimer" to="." method="_on_EnemyTimer_timeout"]
 [connection signal="timeout" from="BackgroundTimer" to="." method="_on_BackgroundTimer_timeout"]
 [connection signal="timeout" from="AsteroidTimer" to="." method="_on_AsteroidTimer_timeout"]
 [connection signal="timeout" from="ScoreTimer" to="." method="_on_ScoreTimer_timeout"]
+[connection signal="pressed" from="LeftTouchscreenButton" to="." method="_on_LeftTouchscreenButton_pressed"]
+[connection signal="pressed" from="RightTouchscreenButton" to="." method="_on_RightTouchscreenButton_pressed"]
 [connection signal="gui_input" from="TitleTextNode/TitleText" to="." method="_on_TitleText_gui_input"]
 [connection signal="gui_input" from="GameOverTextNode/GameOverText" to="." method="_on_TitleText_gui_input"]
 [connection signal="area_entered" from="PlanetNode/PlanetArea2D" to="." method="_on_PlanetArea2D_area_entered"]
-[connection signal="pressed" from="LeftTouchscreenButton" to="." method="_on_LeftTouchscreenButton_pressed"]
-[connection signal="pressed" from="RightTouchscreenButton" to="." method="_on_RightTouchscreenButton_pressed"]

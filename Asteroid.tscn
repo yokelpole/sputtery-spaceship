@@ -26,5 +26,5 @@ polygon = PoolVector2Array( -304.617, 78.3408, -330.178, 78.9799, -273.942, 78.3
 [node name="AsteroidBodyCollisionArea" type="CollisionPolygon2D" parent="AsteroidBodyArea"]
 position = Vector2( 368.586, -86.9768 )
 scale = Vector2( 1.06698, 1.08938 )
-polygon = PoolVector2Array( -304.617, 78.3408, -330.178, 78.9799, -273.942, 78.3408, -246.464, 119.879, -264.113, 147.436, -285.607, 144.924, -317.115, 156.526, -343.598, 126.908, -330.178, 78.9799 )
+polygon = PoolVector2Array( -304.617, 78.3408, -330.178, 78.9799, -273.942, 78.3408, -246.464, 119.879, -264.113, 147.436, -285.607, 144.924, -317.115, 156.526, -345.206, 125.45, -330.178, 78.9799 )
 [connection signal="area_entered" from="AsteroidBodyArea" to="." method="_on_AsteroidBodyArea_area_entered"]

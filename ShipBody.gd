@@ -35,7 +35,7 @@ func bump():
 	yield(get_tree().create_timer(DELAY_BETWEEN_BUMPS), "timeout")
 	SHIP_BUMP_DELAY_ACTIVE = false
 
-func _integrate_forces(state):
+func _integrate_forces(_state):
 	if position.y <= 0 and SHIP_DISABLED_ACTIVE == false:
 		SHIP_DISABLED_ACTIVE = true
 		apply_impulse(Vector2(0, 0), Vector2(0, 5))
@@ -52,7 +52,7 @@ func _integrate_forces(state):
 	if Input.is_action_pressed("ui_up"):
 		bump()
 
-func _on_enemy_has_collided_with_player(area):
+func _on_enemy_has_collided_with_player():
 	$ExplosionSprite.visible = true
 	$ExplosionSprite.play("boom")
 	$ExplosionSprite.playing = true
