@@ -44,7 +44,12 @@ func start_game():
 	$AsteroidTimer.start()
 	$ScoreTimer.start()
 
-func on_player_dead():
+func cleanup_previous_game():
+	for child in get_children():
+		if child.is_in_group("instance"):
+			child.queue_free()
+
+func on_game_over():
 	end_score = player.score
 	$EnemyTimer.stop()
 	$AsteroidTimer.stop()
@@ -53,6 +58,7 @@ func on_player_dead():
 	$HudNode/Score.bbcode_text = "[right]SCORE: 0[/right]"
 	$GameOverTextNode.visible = true
 	$HudNode.visible = false
+	cleanup_previous_game()
 
 func _on_bullet_has_collided_with_enemy(area):
 	if is_instance_valid(player) != true:
@@ -72,18 +78,19 @@ func _on_enemy_has_collided_with_player(area):
 		return
 	
 	player._on_enemy_has_collided_with_player()
-	on_player_dead()
+	on_game_over()
 
 func _on_asteroid_has_collided_with_player(area):
 	if is_instance_valid(player) != true:
 		return
 	
 	player._on_enemy_has_collided_with_player()
-	on_player_dead()
+	on_game_over()
 	
 func _on_player_shoot_bullet():
 	var new_bullet = Bullet.instance()
 	add_child(new_bullet)
+	new_bullet.add_to_group("instance")
 	var ship_extents = player.collision_shape.shape.extents
 	var x_position = (player.position.x + ship_extents.x * 2) - player.rotation_degrees
 	var y_position = (player.position.y + ship_extents.y) + player.rotation_degrees * 4
@@ -95,6 +102,7 @@ func _on_player_shoot_bullet():
 func _on_EnemyTimer_timeout():
 	var new_enemy = Enemy.instance()
 	add_child(new_enemy)
+	new_enemy.add_to_group("instance")
 	new_enemy.connect("bullet_has_collided_with_enemy", self, "_on_bullet_has_collided_with_enemy")
 	new_enemy.connect("enemy_has_collided_with_player", self, "_on_enemy_has_collided_with_player")
 	new_enemy.global_position = Vector2(SCREEN_WIDTH, rand_range(10, 500))
@@ -103,6 +111,7 @@ func _on_EnemyTimer_timeout():
 func _on_AsteroidTimer_timeout():
 	var new_asteroid = Asteroid.instance()
 	add_child(new_asteroid)
+	new_asteroid.add_to_group("instance")
 	new_asteroid.connect("asteroid_has_collided_with_player", self, "_on_asteroid_has_collided_with_player")
 	new_asteroid.connect("asteroid_has_collided_with_enemy", self, "_on_asteroid_has_collided_with_enemy")
 	new_asteroid.connect("asteroid_has_collided_with_bullet", self, "_on_asteroid_has_collided_with_bullet")
