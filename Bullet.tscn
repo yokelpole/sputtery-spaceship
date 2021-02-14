@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://Player Laser/laserRed08.png" type="Texture" id=2]
 [ext_resource path="res://Player Laser/laserRed11.png" type="Texture" id=3]
@@ -13,30 +13,23 @@ animations = [ {
 "speed": 30.0
 } ]
 
-[sub_resource type="CircleShape2D" id=2]
-radius = 24.1606
-
 [sub_resource type="CircleShape2D" id=3]
-radius = 20.9176
+radius = 24.7452
 
 [node name="BulletBody" type="RigidBody2D"]
 position = Vector2( 20.0972, 29.8569 )
 collision_layer = 2
 collision_mask = 2
 gravity_scale = 0.0
+contacts_reported = 1
+contact_monitor = true
 
 [node name="AnimatedSprite" type="AnimatedSprite" parent="."]
 position = Vector2( 0, 1 )
 frames = SubResource( 1 )
-frame = 2
+frame = 1
 playing = true
 
-[node name="BulletCollisionShape" type="CollisionShape2D" parent="."]
-position = Vector2( 1.24658, 1.55823 )
-shape = SubResource( 2 )
-
-[node name="BulletBodyArea" type="Area2D" parent="."]
-
-[node name="BulletBodyAreaCollision" type="CollisionShape2D" parent="BulletBodyArea"]
-position = Vector2( 1.10803, 2.21606 )
+[node name="BulletBodyAreaCollisionShape" type="CollisionShape2D" parent="."]
+position = Vector2( -0.16115, 1.21606 )
 shape = SubResource( 3 )

@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=2]
+[gd_scene load_steps=21 format=2]
 
 [ext_resource path="res://EnemyBody.gd" type="Script" id=1]
 [ext_resource path="res://Simple explosion/simpleExplosion07.png" type="Texture" id=2]
@@ -18,7 +18,7 @@
 [ext_resource path="res://Smoke/smokeGrey5.png" type="Texture" id=16]
 [ext_resource path="res://Smoke/smokeGrey1.png" type="Texture" id=17]
 
-[sub_resource type="SpriteFrames" id=4]
+[sub_resource type="SpriteFrames" id=1]
 animations = [ {
 "frames": [ ExtResource( 13 ), ExtResource( 17 ), ExtResource( 14 ), ExtResource( 12 ), ExtResource( 15 ), ExtResource( 16 ) ],
 "loop": true,
@@ -26,7 +26,7 @@ animations = [ {
 "speed": 5.0
 } ]
 
-[sub_resource type="SpriteFrames" id=1]
+[sub_resource type="SpriteFrames" id=2]
 animations = [ {
 "frames": [ ExtResource( 11 ), ExtResource( 6 ), ExtResource( 9 ), ExtResource( 10 ), ExtResource( 7 ), ExtResource( 4 ), ExtResource( 3 ), ExtResource( 2 ), ExtResource( 8 ) ],
 "loop": false,
@@ -34,16 +34,15 @@ animations = [ {
 "speed": 5.0
 } ]
 
-[sub_resource type="RectangleShape2D" id=2]
+[sub_resource type="RectangleShape2D" id=4]
 extents = Vector2( 40.9918, 45.4935 )
-
-[sub_resource type="RectangleShape2D" id=3]
-extents = Vector2( 45.2341, 47.3261 )
 
 [node name="EnemyBody" type="RigidBody2D"]
 position = Vector2( 7.48187, 13.1676 )
-collision_layer = 3
-collision_mask = 2
+collision_layer = 7
+collision_mask = 7
+contacts_reported = 1
+contact_monitor = true
 script = ExtResource( 1 )
 
 [node name="EnemySprite" type="Sprite" parent="."]
@@ -55,28 +54,20 @@ texture = ExtResource( 5 )
 visible = false
 position = Vector2( -1.22194, -51.2557 )
 rotation = -1.5708
-frames = SubResource( 4 )
+frames = SubResource( 1 )
 animation = "smoke"
-frame = 2
+frame = 4
 playing = true
 
 [node name="ExplosionSprite" type="AnimatedSprite" parent="."]
 visible = false
 position = Vector2( 37.8408, 35.2358 )
-frames = SubResource( 1 )
+frames = SubResource( 2 )
 animation = "boom"
 speed_scale = 3.0
 
 [node name="EnemyCollisionShape" type="CollisionShape2D" parent="."]
-visible = false
 position = Vector2( 38.36, 35.8234 )
-shape = SubResource( 2 )
-
-[node name="EnemyBodyArea" type="Area2D" parent="."]
-visible = false
-
-[node name="EnemyBodyAreaCollision" type="CollisionShape2D" parent="EnemyBodyArea"]
-position = Vector2( 37.7262, 36.3438 )
-shape = SubResource( 3 )
+shape = SubResource( 4 )
+[connection signal="body_entered" from="." to="." method="_on_EnemyBody_body_entered"]
 [connection signal="animation_finished" from="ExplosionSprite" to="." method="_on_ExplosionSprite_animation_finished"]
-[connection signal="area_entered" from="EnemyBodyArea" to="." method="_on_EnemyBodyArea_area_entered"]

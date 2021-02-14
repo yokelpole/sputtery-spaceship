@@ -5,29 +5,29 @@
 [ext_resource path="res://Game.gd" type="Script" id=4]
 [ext_resource path="res://beautiful-blue-stars-fill.jpg" type="Texture" id=20]
 
-[sub_resource type="NavigationPolygon" id=6]
+[sub_resource type="NavigationPolygon" id=1]
 vertices = PoolVector2Array( 1152.51, 5.10138, 1158.21, 578.904, 6.80118, 578.904, 8.70117, 7.0014 )
 polygons = [ PoolIntArray( 0, 1, 2, 3 ) ]
 outlines = [ PoolVector2Array( 8.70117, 7.0014, 6.80118, 578.904, 1158.21, 578.904, 1152.51, 5.10138 ) ]
 
-[sub_resource type="RectangleShape2D" id=1]
-extents = Vector2( 250, 300 )
-
 [sub_resource type="RectangleShape2D" id=2]
 extents = Vector2( 250, 300 )
 
-[sub_resource type="DynamicFont" id=3]
+[sub_resource type="RectangleShape2D" id=3]
+extents = Vector2( 250, 300 )
+
+[sub_resource type="DynamicFont" id=4]
 size = 96
 use_filter = true
 font_data = ExtResource( 1 )
 
-[sub_resource type="DynamicFont" id=4]
+[sub_resource type="DynamicFont" id=5]
 size = 48
 use_filter = true
 font_data = ExtResource( 1 )
 
-[sub_resource type="CircleShape2D" id=5]
-radius = 600.011
+[sub_resource type="CircleShape2D" id=6]
+radius = 597.709
 
 [node name="Game" type="Node2D"]
 script = ExtResource( 4 )
@@ -35,7 +35,7 @@ script = ExtResource( 4 )
 [node name="Navigation2D" type="Navigation2D" parent="."]
 
 [node name="NavigationPolygonInstance" type="NavigationPolygonInstance" parent="Navigation2D"]
-navpoly = SubResource( 6 )
+navpoly = SubResource( 1 )
 
 [node name="EnemyTimer" type="Timer" parent="."]
 wait_time = 0.75
@@ -54,12 +54,12 @@ wait_time = 2.5
 
 [node name="LeftTouchscreenButton" type="TouchScreenButton" parent="."]
 z_index = 20
-shape = SubResource( 1 )
+shape = SubResource( 2 )
 
 [node name="RightTouchscreenButton" type="TouchScreenButton" parent="."]
 position = Vector2( 518.028, 0 )
 z_index = 20
-shape = SubResource( 2 )
+shape = SubResource( 3 )
 
 [node name="ParallaxBackground" type="ParallaxBackground" parent="."]
 scroll_limit_end = Vector2( 800000, 7e+06 )
@@ -80,14 +80,14 @@ __meta__ = {
 }
 
 [node name="TitleTextNode" type="Node2D" parent="."]
-z_index = 10
+z_index = 50
 
 [node name="TitleText" type="RichTextLabel" parent="TitleTextNode"]
 margin_left = 45.0
 margin_top = 33.0
 margin_right = 974.0
 margin_bottom = 558.0
-custom_fonts/normal_font = SubResource( 3 )
+custom_fonts/normal_font = SubResource( 4 )
 text = "SPUTTERING 
 SPACESHIP
 CLICK TO START"
@@ -97,26 +97,26 @@ __meta__ = {
 
 [node name="GameOverTextNode" type="Node2D" parent="."]
 visible = false
-z_index = 10
+z_index = 50
 
 [node name="GameOverText" type="RichTextLabel" parent="GameOverTextNode"]
 margin_left = 45.0
 margin_top = 33.0
 margin_right = 974.0
 margin_bottom = 558.0
-custom_fonts/normal_font = SubResource( 3 )
+custom_fonts/normal_font = SubResource( 4 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="HudNode" type="Node2D" parent="."]
 visible = false
-z_index = 10
+z_index = 50
 
 [node name="Score" type="RichTextLabel" parent="HudNode"]
 margin_right = 1005.0
 margin_bottom = 72.0
-custom_fonts/normal_font = SubResource( 4 )
+custom_fonts/normal_font = SubResource( 5 )
 bbcode_enabled = true
 bbcode_text = "[right]SCORE: 0[/right]"
 text = "SCORE: 0"
@@ -129,8 +129,10 @@ position = Vector2( 532.002, 1116 )
 z_index = 1
 collision_layer = 4
 collision_mask = 4
-mass = 0.00102041
+mass = 65535.0
 gravity_scale = 0.0
+contacts_reported = 1
+contact_monitor = true
 angular_velocity = 0.25
 angular_damp = 0.0
 
@@ -138,13 +140,8 @@ angular_damp = 0.0
 z_as_relative = false
 texture = ExtResource( 2 )
 
-[node name="PlanetArea2D" type="Area2D" parent="PlanetNode"]
-
-[node name="PlanetAreaCollisionShape" type="CollisionShape2D" parent="PlanetNode/PlanetArea2D"]
-shape = SubResource( 5 )
-
 [node name="PlanetCollisionShape" type="CollisionShape2D" parent="PlanetNode"]
-shape = SubResource( 5 )
+shape = SubResource( 6 )
 [connection signal="timeout" from="EnemyTimer" to="." method="_on_EnemyTimer_timeout"]
 [connection signal="timeout" from="SmarterEnemyTimer" to="." method="_on_SmarterEnemyTimer_timeout"]
 [connection signal="timeout" from="BackgroundTimer" to="." method="_on_BackgroundTimer_timeout"]
@@ -154,4 +151,4 @@ shape = SubResource( 5 )
 [connection signal="pressed" from="RightTouchscreenButton" to="." method="_on_RightTouchscreenButton_pressed"]
 [connection signal="gui_input" from="TitleTextNode/TitleText" to="." method="_on_TitleText_gui_input"]
 [connection signal="gui_input" from="GameOverTextNode/GameOverText" to="." method="_on_TitleText_gui_input"]
-[connection signal="area_entered" from="PlanetNode/PlanetArea2D" to="." method="_on_PlanetArea2D_area_entered"]
+[connection signal="body_entered" from="PlanetNode" to="." method="_on_PlanetNode_body_entered"]

@@ -63,31 +63,30 @@ func on_game_over():
 	$HudNode.visible = false
 	cleanup_previous_game()
 
-func _on_bullet_has_collided_with_enemy(area):
+func _on_bullet_has_collided_with_enemy(body):
 	if is_instance_valid(player) != true:
 		return
 	
 	player.score = player.score + 10
-	remove_child(area.get_parent())
+	remove_child(body)
 
-func _on_asteroid_has_collided_with_enemy(area):
-	area.get_parent().on_enemy_collision()
+func _on_asteroid_has_collided_with_enemy(body):
+	if is_instance_valid(body) != true:
+		return
 
-func _on_asteroid_has_collided_with_bullet(area):
-	area.get_parent().queue_free()
+	body.on_enemy_collision(body)
 
-func _on_enemy_has_collided_with_player(area):
-	if is_instance_valid(player) != true:
+func _on_asteroid_has_collided_with_bullet(body):
+	if is_instance_valid(body) != true:
 		return
 	
-	player._on_enemy_has_collided_with_player()
-	on_game_over()
+	remove_child(body)
 
-func _on_asteroid_has_collided_with_player(area):
-	if is_instance_valid(player) != true:
+func _on_object_has_collided_with_player(body):
+	if is_instance_valid(body) != true:
 		return
 	
-	player._on_enemy_has_collided_with_player()
+	player._on_object_has_collided_with_player(body)
 	on_game_over()
 	
 func _on_player_shoot_bullet():
@@ -107,7 +106,7 @@ func _on_EnemyTimer_timeout():
 	add_child(new_enemy)
 	new_enemy.add_to_group("instance")
 	new_enemy.connect("bullet_has_collided_with_enemy", self, "_on_bullet_has_collided_with_enemy")
-	new_enemy.connect("enemy_has_collided_with_player", self, "_on_enemy_has_collided_with_player")
+	new_enemy.connect("enemy_has_collided_with_player", self, "_on_object_has_collided_with_player")
 	new_enemy.global_position = Vector2(SCREEN_WIDTH, rand_range(10, 500))
 	new_enemy.linear_velocity = Vector2(-500, 0)
 
@@ -116,7 +115,7 @@ func _on_SmarterEnemyTimer_timeout():
 	add_child(new_enemy)
 	new_enemy.add_to_group("instance")
 	new_enemy.connect("bullet_has_collided_with_enemy", self, "_on_bullet_has_collided_with_enemy")
-	new_enemy.connect("enemy_has_collided_with_player", self, "_on_enemy_has_collided_with_player")
+	new_enemy.connect("enemy_has_collided_with_player", self, "_on_object_has_collided_with_player")
 	new_enemy.global_position = Vector2(SCREEN_WIDTH, rand_range(10, 500))
 	new_enemy.path = $Navigation2D.get_simple_path(player.position, new_enemy.position)
 
@@ -124,7 +123,7 @@ func _on_AsteroidTimer_timeout():
 	var new_asteroid = Asteroid.instance()
 	add_child(new_asteroid)
 	new_asteroid.add_to_group("instance")
-	new_asteroid.connect("asteroid_has_collided_with_player", self, "_on_asteroid_has_collided_with_player")
+	new_asteroid.connect("asteroid_has_collided_with_player", self, "_on_object_has_collided_with_player")
 	new_asteroid.connect("asteroid_has_collided_with_enemy", self, "_on_asteroid_has_collided_with_enemy")
 	new_asteroid.connect("asteroid_has_collided_with_bullet", self, "_on_asteroid_has_collided_with_bullet")
 	new_asteroid.global_position = Vector2(SCREEN_WIDTH, rand_range(10, 500))
@@ -146,13 +145,6 @@ func _on_TitleText_gui_input(event):
 func _on_ScoreTimer_timeout():
 	player.score = player.score + 1
 
-func _on_PlanetArea2D_area_entered(area):
-	if area.name == "EnemyBodyArea":
-		area.get_parent().has_been_hit = true
-		area.get_parent().on_enemy_collision()
-	if area.name == "PlayerBodyArea":	
-		_on_enemy_has_collided_with_player(area)
-
 func _on_LeftTouchscreenButton_pressed():
 	if is_instance_valid(player) != true:
 		return
@@ -162,3 +154,10 @@ func _on_RightTouchscreenButton_pressed():
 	if is_instance_valid(player) != true:
 		return
 	player.shoot()
+
+func _on_PlanetNode_body_entered(body):
+	if "EnemyBody" in body.name:
+		body.has_been_hit = true
+		body.on_enemy_collision(body)
+	if "PlayerBody" in body.name:
+		_on_object_has_collided_with_player(body)

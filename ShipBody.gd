@@ -1,7 +1,6 @@
 extends RigidBody2D
 
 var SHIP_BUMP_POWER_Y = -400
-var SHIP_BUMP_TORQUE_POWER = -2500
 var DELAY_BETWEEN_BUMPS = 0.25
 var DELAY_BETWEEN_SHOTS = 0.5
 var SHIP_BUMP_DELAY_ACTIVE = false
@@ -13,27 +12,6 @@ signal player_shoot_bullet
 
 onready var collision_shape = $PlayerCollisionShape
 onready var sprite = $PlayerSprite
-
-func shoot():
-	if SHIP_SHOOT_DELAY_ACTIVE == true or SHIP_DISABLED_ACTIVE == true:
-		return
-		
-	SHIP_SHOOT_DELAY_ACTIVE = true
-	call_deferred("emit_signal", "player_shoot_bullet")
-	yield(get_tree().create_timer(DELAY_BETWEEN_SHOTS), "timeout")
-	SHIP_SHOOT_DELAY_ACTIVE = false
-
-func bump():
-	if SHIP_BUMP_DELAY_ACTIVE == true or SHIP_DISABLED_ACTIVE == true:
-		return
-	
-	SHIP_BUMP_DELAY_ACTIVE = true
-	apply_impulse(Vector2(0, 0), Vector2(0, SHIP_BUMP_POWER_Y))
-	apply_torque_impulse(SHIP_BUMP_TORQUE_POWER)
-	$PlayerSprite/PlayerRocket.visible = true
-	$RocketTimer.start()
-	yield(get_tree().create_timer(DELAY_BETWEEN_BUMPS), "timeout")
-	SHIP_BUMP_DELAY_ACTIVE = false
 
 func _integrate_forces(_state):
 	if position.y <= 0 and SHIP_DISABLED_ACTIVE == false:
@@ -52,7 +30,28 @@ func _integrate_forces(_state):
 	if Input.is_action_pressed("ui_up"):
 		bump()
 
-func _on_enemy_has_collided_with_player():
+func shoot():
+	if SHIP_SHOOT_DELAY_ACTIVE == true or SHIP_DISABLED_ACTIVE == true or $ExplosionSprite.visible == true:
+		return
+		
+	SHIP_SHOOT_DELAY_ACTIVE = true
+	call_deferred("emit_signal", "player_shoot_bullet")
+	yield(get_tree().create_timer(DELAY_BETWEEN_SHOTS), "timeout")
+	SHIP_SHOOT_DELAY_ACTIVE = false
+
+func bump():
+	if SHIP_BUMP_DELAY_ACTIVE == true or SHIP_DISABLED_ACTIVE == true or $ExplosionSprite.visible == true:
+		return
+	
+	SHIP_BUMP_DELAY_ACTIVE = true
+	apply_impulse(Vector2(0, 0), Vector2(0, SHIP_BUMP_POWER_Y))
+	$PlayerSprite/PlayerRocket.visible = true
+	$RocketTimer.start()
+	yield(get_tree().create_timer(DELAY_BETWEEN_BUMPS), "timeout")
+	SHIP_BUMP_DELAY_ACTIVE = false
+
+# FIXME: Currently accepts player body
+func _on_object_has_collided_with_player(body):
 	$ExplosionSprite.visible = true
 	$ExplosionSprite.play("boom")
 	$ExplosionSprite.playing = true
