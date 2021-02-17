@@ -14,7 +14,7 @@
 [ext_resource path="res://Rocket Fire/fire06.png" type="Texture" id=12]
 [ext_resource path="res://Rocket Fire/fire07.png" type="Texture" id=13]
 
-[sub_resource type="RectangleShape2D" id=4]
+[sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 38.6698, 50.9887 )
 
 [sub_resource type="SpriteFrames" id=2]
@@ -40,13 +40,13 @@ collision_layer = 5
 collision_mask = 5
 mass = 2.04082
 gravity_scale = 2.0
-contacts_reported = 1
+contacts_reported = 4
 contact_monitor = true
 script = ExtResource( 1 )
 
 [node name="PlayerCollisionShape" type="CollisionShape2D" parent="."]
 position = Vector2( 98.7591, 36.5651 )
-shape = SubResource( 4 )
+shape = SubResource( 1 )
 
 [node name="PlayerOverlaySprite" type="Sprite" parent="."]
 visible = false

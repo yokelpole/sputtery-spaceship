@@ -1,8 +1,10 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=14 format=2]
 
 [ext_resource path="res://Montserrat-Bold.ttf" type="DynamicFontData" id=1]
 [ext_resource path="res://Earth.png" type="Texture" id=2]
+[ext_resource path="res://space.png" type="Texture" id=3]
 [ext_resource path="res://Game.gd" type="Script" id=4]
+[ext_resource path="res://arrowUp.png" type="Texture" id=5]
 [ext_resource path="res://beautiful-blue-stars-fill.jpg" type="Texture" id=20]
 
 [sub_resource type="NavigationPolygon" id=1]
@@ -18,6 +20,11 @@ extents = Vector2( 250, 300 )
 
 [sub_resource type="DynamicFont" id=4]
 size = 96
+use_filter = true
+font_data = ExtResource( 1 )
+
+[sub_resource type="DynamicFont" id=7]
+size = 48
 use_filter = true
 font_data = ExtResource( 1 )
 
@@ -51,6 +58,12 @@ autostart = true
 wait_time = 2.5
 
 [node name="ScoreTimer" type="Timer" parent="."]
+
+[node name="ReadyTimer" type="Timer" parent="."]
+wait_time = 0.25
+
+[node name="GameOverTimer" type="Timer" parent="."]
+one_shot = true
 
 [node name="LeftTouchscreenButton" type="TouchScreenButton" parent="."]
 z_index = 20
@@ -109,6 +122,59 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="GetReadyTextNode" type="Node2D" parent="."]
+visible = false
+z_index = 20
+
+[node name="GetReadyText" type="RichTextLabel" parent="GetReadyTextNode"]
+margin_left = 4.0
+margin_top = 142.0
+margin_right = 1002.0
+margin_bottom = 264.0
+custom_fonts/normal_font = SubResource( 4 )
+bbcode_enabled = true
+bbcode_text = "[center]GET READY[/center]"
+text = "GET READY"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ControlsLeft" type="RichTextLabel" parent="GetReadyTextNode"]
+margin_left = 13.0
+margin_top = 371.965
+margin_right = 492.0
+margin_bottom = 505.965
+custom_fonts/normal_font = SubResource( 7 )
+bbcode_enabled = true
+bbcode_text = "[center]Tap left side for engines[/center]"
+text = "Tap left side for engines"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ControlsLeft2" type="RichTextLabel" parent="GetReadyTextNode"]
+margin_left = 544.981
+margin_top = 377.366
+margin_right = 988.981
+margin_bottom = 507.366
+custom_fonts/normal_font = SubResource( 7 )
+bbcode_enabled = true
+bbcode_text = "[center]Tap right side to shoot[/center]"
+text = "Tap right side to shoot"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="UpArrow" type="Sprite" parent="GetReadyTextNode"]
+position = Vector2( 83.5088, 521.022 )
+scale = Vector2( 0.740764, 0.724039 )
+texture = ExtResource( 5 )
+
+[node name="SpaceBar" type="Sprite" parent="GetReadyTextNode"]
+position = Vector2( 759.576, 531.39 )
+scale = Vector2( 0.120115, 0.121181 )
+texture = ExtResource( 3 )
+
 [node name="HudNode" type="Node2D" parent="."]
 visible = false
 z_index = 50
@@ -147,8 +213,13 @@ shape = SubResource( 6 )
 [connection signal="timeout" from="BackgroundTimer" to="." method="_on_BackgroundTimer_timeout"]
 [connection signal="timeout" from="AsteroidTimer" to="." method="_on_AsteroidTimer_timeout"]
 [connection signal="timeout" from="ScoreTimer" to="." method="_on_ScoreTimer_timeout"]
+[connection signal="timeout" from="ReadyTimer" to="." method="_on_ReadyTimer_timeout"]
+[connection signal="timeout" from="GameOverTimer" to="." method="_on_GameOverTimer_timeout"]
 [connection signal="pressed" from="LeftTouchscreenButton" to="." method="_on_LeftTouchscreenButton_pressed"]
 [connection signal="pressed" from="RightTouchscreenButton" to="." method="_on_RightTouchscreenButton_pressed"]
 [connection signal="gui_input" from="TitleTextNode/TitleText" to="." method="_on_TitleText_gui_input"]
 [connection signal="gui_input" from="GameOverTextNode/GameOverText" to="." method="_on_TitleText_gui_input"]
+[connection signal="gui_input" from="GetReadyTextNode/GetReadyText" to="." method="_on_TitleText_gui_input"]
+[connection signal="gui_input" from="GetReadyTextNode/ControlsLeft" to="." method="_on_TitleText_gui_input"]
+[connection signal="gui_input" from="GetReadyTextNode/ControlsLeft2" to="." method="_on_TitleText_gui_input"]
 [connection signal="body_entered" from="PlanetNode" to="." method="_on_PlanetNode_body_entered"]

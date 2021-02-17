@@ -34,14 +34,14 @@ animations = [ {
 "speed": 5.0
 } ]
 
-[sub_resource type="RectangleShape2D" id=4]
+[sub_resource type="RectangleShape2D" id=3]
 extents = Vector2( 42.9745, 52.2378 )
 
 [node name="SmarterEnemyBody" type="RigidBody2D"]
 position = Vector2( 7.48187, 13.1676 )
 collision_layer = 7
 collision_mask = 7
-contacts_reported = 1
+contacts_reported = 4
 contact_monitor = true
 linear_velocity = Vector2( -300, -150 )
 script = ExtResource( 1 )
@@ -57,7 +57,6 @@ position = Vector2( -1.22194, -51.2557 )
 rotation = -1.5708
 frames = SubResource( 1 )
 animation = "smoke"
-frame = 3
 playing = true
 
 [node name="ExplosionSprite" type="AnimatedSprite" parent="."]
@@ -69,6 +68,7 @@ speed_scale = 3.0
 
 [node name="EnemyCollisionShape" type="CollisionShape2D" parent="."]
 position = Vector2( 37.36, 35.8234 )
-shape = SubResource( 4 )
+shape = SubResource( 3 )
+disabled = true
 [connection signal="body_entered" from="." to="." method="_on_EnemyBody_body_entered"]
 [connection signal="animation_finished" from="ExplosionSprite" to="." method="_on_ExplosionSprite_animation_finished"]
