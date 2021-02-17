@@ -14,7 +14,7 @@ onready var collision_shape = $PlayerCollisionShape
 onready var sprite = $PlayerSprite
 
 func _integrate_forces(_state):
-	if position.y <= 0 and SHIP_DISABLED_ACTIVE == false:
+	if position.y <= -20 and SHIP_DISABLED_ACTIVE == false:
 		SHIP_DISABLED_ACTIVE = true
 		apply_impulse(Vector2(0, 0), Vector2(0, 5))
 		$BlinkingTimer.start()

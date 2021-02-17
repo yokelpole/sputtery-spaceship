@@ -45,10 +45,9 @@ script = ExtResource( 4 )
 navpoly = SubResource( 1 )
 
 [node name="EnemyTimer" type="Timer" parent="."]
-wait_time = 0.75
 
 [node name="SmarterEnemyTimer" type="Timer" parent="."]
-wait_time = 2.5
+wait_time = 5.0
 
 [node name="BackgroundTimer" type="Timer" parent="."]
 wait_time = 0.001

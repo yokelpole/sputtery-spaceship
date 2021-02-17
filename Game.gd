@@ -79,7 +79,7 @@ func on_game_over():
 	
 func fetch_high_score():
 	var file_handler = File.new()
-	file_handler.open("high_score", File.READ)
+	file_handler.open("user://high_score", File.READ)
 	var value = file_handler.get_64()
 	file_handler.close()
 	return value
@@ -90,7 +90,7 @@ func update_high_score(score):
 		return previous_high_score
 	
 	var file_handler = File.new()
-	file_handler.open("high_score", File.WRITE)
+	file_handler.open("user://high_score", File.WRITE)
 	file_handler.store_64(score)
 	file_handler.close()
 	return score
@@ -99,13 +99,16 @@ func _on_bullet_has_collided_with_enemy(body):
 	if is_instance_valid(player) != true:
 		return
 	
-	player.score = player.score + 10
+	player.score += 10
 	remove_child(body)
 
-func _on_asteroid_has_collided_with_enemy(body):
+func _on_asteroid_has_collided_with_enemy(body, last_hit_by_bullet):
 	if is_instance_valid(body) != true:
 		return
 
+	if last_hit_by_bullet == true:
+		player.score += 10
+		
 	body.on_enemy_collision(body)
 
 func _on_asteroid_has_collided_with_bullet(body):
@@ -123,11 +126,10 @@ func _on_object_has_collided_with_player(body):
 	
 func _on_player_shoot_bullet():
 	var new_bullet = Bullet.instance()
+	var x_position = player.position.x + 100
+	var y_position = player.position.y + 40
 	add_child(new_bullet)
 	new_bullet.add_to_group("instance")
-	var ship_extents = player.collision_shape.shape.extents
-	var x_position = (player.position.x + ship_extents.x * 2) - player.rotation_degrees
-	var y_position = (player.position.y + ship_extents.y) + player.rotation_degrees * 4
 	new_bullet.position = Vector2(x_position + 20, y_position)
 	new_bullet.rotation_degrees = player.rotation_degrees
 	new_bullet.linear_velocity = Vector2(500, player.rotation_degrees * 16)

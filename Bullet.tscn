@@ -13,13 +13,14 @@ animations = [ {
 "speed": 30.0
 } ]
 
-[sub_resource type="CircleShape2D" id=3]
+[sub_resource type="CircleShape2D" id=2]
 radius = 24.7452
 
 [node name="BulletBody" type="RigidBody2D"]
 position = Vector2( 20.0972, 29.8569 )
-collision_layer = 2
-collision_mask = 2
+collision_layer = 98
+collision_mask = 98
+mass = 0.459184
 gravity_scale = 0.0
 contacts_reported = 1
 contact_monitor = true
@@ -32,4 +33,4 @@ playing = true
 
 [node name="BulletBodyAreaCollisionShape" type="CollisionShape2D" parent="."]
 position = Vector2( -0.16115, 1.21606 )
-shape = SubResource( 3 )
+shape = SubResource( 2 )

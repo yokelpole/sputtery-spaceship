@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=2]
+[gd_scene load_steps=20 format=2]
 
 [ext_resource path="res://EnemyBody.gd" type="Script" id=1]
 [ext_resource path="res://Simple explosion/simpleExplosion07.png" type="Texture" id=2]
@@ -34,13 +34,10 @@ animations = [ {
 "speed": 5.0
 } ]
 
-[sub_resource type="RectangleShape2D" id=3]
-extents = Vector2( 40.9918, 45.4935 )
-
 [node name="EnemyBody" type="RigidBody2D"]
 position = Vector2( 7.48187, 13.1676 )
-collision_layer = 7
-collision_mask = 7
+collision_layer = 64
+collision_mask = 64
 contacts_reported = 4
 contact_monitor = true
 script = ExtResource( 1 )
@@ -56,7 +53,7 @@ position = Vector2( -1.22194, -51.2557 )
 rotation = -1.5708
 frames = SubResource( 1 )
 animation = "smoke"
-frame = 2
+frame = 1
 playing = true
 
 [node name="ExplosionSprite" type="AnimatedSprite" parent="."]
@@ -66,9 +63,8 @@ frames = SubResource( 2 )
 animation = "boom"
 speed_scale = 3.0
 
-[node name="EnemyCollisionShape" type="CollisionShape2D" parent="."]
-position = Vector2( 38.36, 35.8234 )
-shape = SubResource( 3 )
-disabled = true
+[node name="EnemyCollisionShape" type="CollisionPolygon2D" parent="."]
+position = Vector2( -1, 0 )
+polygon = PoolVector2Array( 0.728732, 22.8752, -4.06128, 9.51886, 53.844, -11.4766, 80.9474, 5.46303, 72.217, 26.4421, 71.2452, 42.5035, 81.8596, 64.6215, 53.6281, 81.4528, -4.27355, 60.1449, -0.361738, 43.2305, 0.728732, 22.8752 )
 [connection signal="body_entered" from="." to="." method="_on_EnemyBody_body_entered"]
 [connection signal="animation_finished" from="ExplosionSprite" to="." method="_on_ExplosionSprite_animation_finished"]
