@@ -18,7 +18,7 @@ _global_script_class_icons={
 config/name="Sputtery Spaceship"
 config/description="Sputtery Spaceship is a flappy bird style space shooter. Fight gravity and the oncoming enemies to stay alive as long as you possibly can!"
 run/main_scene="res://Game.tscn"
-boot_splash/image="res://playerShip1_red.png"
+boot_splash/image="res://splash_screen.png"
 config/icon="res://playerShip1_red.png"
 
 [display]
