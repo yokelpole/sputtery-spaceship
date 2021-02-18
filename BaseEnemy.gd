@@ -26,6 +26,7 @@ func on_enemy_collision(body):
 		$ExplosionSprite.visible = true
 		$ExplosionSprite.play("boom")
 		$ExplosionSprite.playing = true
+		$ExplodeSound.play()
 		remove_child($EnemyCollisionShape)
 		
 		# TODO: This might be able to be removed with the collision shape being discarded

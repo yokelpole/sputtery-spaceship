@@ -75,6 +75,10 @@ func on_game_over():
 	$HudNode.visible = false
 	game_over_delay = true
 	$GameOverTimer.start()
+	$GameOverSound.stream.loop = false
+	$GameOverSound.play()
+
+	print("### IN ON GAME OVER")
 	cleanup_previous_game()
 	
 func fetch_high_score():

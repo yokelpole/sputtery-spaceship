@@ -28,7 +28,7 @@ contact_monitor = true
 [node name="AnimatedSprite" type="AnimatedSprite" parent="."]
 position = Vector2( 0, 1 )
 frames = SubResource( 1 )
-frame = 1
+frame = 3
 playing = true
 
 [node name="BulletBodyAreaCollisionShape" type="CollisionShape2D" parent="."]

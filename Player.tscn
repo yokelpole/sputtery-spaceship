@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=2]
+[gd_scene load_steps=18 format=2]
 
 [ext_resource path="res://ShipBody.gd" type="Script" id=1]
 [ext_resource path="res://playerShip1_red.png" type="Texture" id=2]
@@ -13,6 +13,8 @@
 [ext_resource path="res://Simple explosion/simpleExplosion00.png" type="Texture" id=11]
 [ext_resource path="res://Rocket Fire/fire06.png" type="Texture" id=12]
 [ext_resource path="res://Rocket Fire/fire07.png" type="Texture" id=13]
+[ext_resource path="res://Sounds/laser5.ogg" type="AudioStream" id=14]
+[ext_resource path="res://Sounds/rumble3.ogg" type="AudioStream" id=15]
 
 [sub_resource type="SpriteFrames" id=2]
 animations = [ {
@@ -42,7 +44,7 @@ contact_monitor = true
 script = ExtResource( 1 )
 
 [node name="PlayerCollisionShape" type="CollisionPolygon2D" parent="."]
-polygon = PoolVector2Array( 61.0511, 28.6149, 74.762, -10.5592, 105.013, -13.8237, 111.542, 22.5211, 136.788, 26.4385, 136.788, 43.8492, 110.019, 48.8548, 105.231, 85.1996, 74.5444, 83.2409, 61.2687, 43.1963 )
+polygon = PoolVector2Array( 61.0511, 28.6149, 74.762, -10.5592, 105.013, -13.8237, 111.542, 22.5211, 136.788, 26.4385, 136.835, 46.1929, 110.019, 48.8548, 105.231, 85.1996, 74.5444, 83.2409, 61.2687, 43.1963 )
 
 [node name="PlayerOverlaySprite" type="Sprite" parent="."]
 visible = false
@@ -83,6 +85,12 @@ one_shot = true
 [node name="RocketTimer" type="Timer" parent="."]
 wait_time = 0.25
 one_shot = true
+
+[node name="LaserSound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource( 14 )
+
+[node name="ExplodeSound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource( 15 )
 [connection signal="animation_finished" from="ExplosionSprite" to="." method="_on_ExplosionSprite_animation_finished"]
 [connection signal="timeout" from="BlinkingTimer" to="." method="_on_BlinkingTimer_timeout"]
 [connection signal="timeout" from="DisabledTimer" to="." method="_on_DisabledTimer_timeout"]

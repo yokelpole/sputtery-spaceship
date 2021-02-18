@@ -36,6 +36,7 @@ func shoot():
 		
 	SHIP_SHOOT_DELAY_ACTIVE = true
 	call_deferred("emit_signal", "player_shoot_bullet")
+	$LaserSound.play()
 	yield(get_tree().create_timer(DELAY_BETWEEN_SHOTS), "timeout")
 	SHIP_SHOOT_DELAY_ACTIVE = false
 
@@ -56,6 +57,7 @@ func _on_object_has_collided_with_player(body):
 	$ExplosionSprite.play("boom")
 	$ExplosionSprite.playing = true
 	$PlayerSprite.visible = false
+	$ExplodeSound.play()
 
 func _on_ExplosionSprite_animation_finished():
 	queue_free()

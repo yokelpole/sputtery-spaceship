@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=2]
+[gd_scene load_steps=21 format=2]
 
 [ext_resource path="res://EnemyBody.gd" type="Script" id=1]
 [ext_resource path="res://Simple explosion/simpleExplosion07.png" type="Texture" id=2]
@@ -17,6 +17,7 @@
 [ext_resource path="res://Smoke/smokeGrey4.png" type="Texture" id=15]
 [ext_resource path="res://Smoke/smokeGrey5.png" type="Texture" id=16]
 [ext_resource path="res://Smoke/smokeGrey1.png" type="Texture" id=17]
+[ext_resource path="res://Sounds/rumble3.ogg" type="AudioStream" id=18]
 
 [sub_resource type="SpriteFrames" id=1]
 animations = [ {
@@ -53,7 +54,7 @@ position = Vector2( -1.22194, -51.2557 )
 rotation = -1.5708
 frames = SubResource( 1 )
 animation = "smoke"
-frame = 1
+frame = 5
 playing = true
 
 [node name="ExplosionSprite" type="AnimatedSprite" parent="."]
@@ -64,7 +65,11 @@ animation = "boom"
 speed_scale = 3.0
 
 [node name="EnemyCollisionShape" type="CollisionPolygon2D" parent="."]
-position = Vector2( -1, 0 )
-polygon = PoolVector2Array( 0.728732, 22.8752, -4.06128, 9.51886, 53.844, -11.4766, 80.9474, 5.46303, 72.217, 26.4421, 71.2452, 42.5035, 81.8596, 64.6215, 53.6281, 81.4528, -4.27355, 60.1449, -0.361738, 43.2305, 0.728732, 22.8752 )
+position = Vector2( -2.55605, 1.38315 )
+polygon = PoolVector2Array( 0.728732, 22.8752, -4.06128, 9.51886, 54.0336, -13.0165, 83.8885, 3.03051, 75.4918, 26.1681, 74.7454, 42.7749, 84.6349, 63.4867, 53.6281, 81.4528, -4.27355, 60.1449, -0.361738, 43.2305, 0.728732, 22.8752 )
+
+[node name="ExplodeSound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource( 18 )
+volume_db = -15.0
 [connection signal="body_entered" from="." to="." method="_on_EnemyBody_body_entered"]
 [connection signal="animation_finished" from="ExplosionSprite" to="." method="_on_ExplosionSprite_animation_finished"]
