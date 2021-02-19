@@ -24,17 +24,17 @@ size = 96
 use_filter = true
 font_data = ExtResource( 1 )
 
-[sub_resource type="DynamicFont" id=7]
-size = 48
-use_filter = true
-font_data = ExtResource( 1 )
-
 [sub_resource type="DynamicFont" id=5]
 size = 48
 use_filter = true
 font_data = ExtResource( 1 )
 
-[sub_resource type="CircleShape2D" id=6]
+[sub_resource type="DynamicFont" id=6]
+size = 48
+use_filter = true
+font_data = ExtResource( 1 )
+
+[sub_resource type="CircleShape2D" id=7]
 radius = 597.709
 
 [node name="Game" type="Node2D"]
@@ -145,7 +145,7 @@ margin_left = 13.0
 margin_top = 371.965
 margin_right = 492.0
 margin_bottom = 505.965
-custom_fonts/normal_font = SubResource( 7 )
+custom_fonts/normal_font = SubResource( 5 )
 bbcode_enabled = true
 bbcode_text = "[center]Tap left side for engines[/center]"
 text = "Tap left side for engines"
@@ -158,7 +158,7 @@ margin_left = 544.981
 margin_top = 377.366
 margin_right = 988.981
 margin_bottom = 507.366
-custom_fonts/normal_font = SubResource( 7 )
+custom_fonts/normal_font = SubResource( 5 )
 bbcode_enabled = true
 bbcode_text = "[center]Tap right side to shoot[/center]"
 text = "Tap right side to shoot"
@@ -183,7 +183,7 @@ z_index = 50
 [node name="Score" type="RichTextLabel" parent="HudNode"]
 margin_right = 1005.0
 margin_bottom = 72.0
-custom_fonts/normal_font = SubResource( 5 )
+custom_fonts/normal_font = SubResource( 6 )
 bbcode_enabled = true
 bbcode_text = "[right]SCORE: 0[/right]"
 text = "SCORE: 0"
@@ -200,7 +200,7 @@ mass = 65535.0
 gravity_scale = 0.0
 contacts_reported = 1
 contact_monitor = true
-angular_velocity = 0.25
+angular_velocity = -0.25
 angular_damp = 0.0
 
 [node name="PlanetSprite" type="Sprite" parent="PlanetNode"]
@@ -208,7 +208,7 @@ z_as_relative = false
 texture = ExtResource( 2 )
 
 [node name="PlanetCollisionShape" type="CollisionShape2D" parent="PlanetNode"]
-shape = SubResource( 6 )
+shape = SubResource( 7 )
 
 [node name="GameOverSound" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 6 )
