@@ -19,14 +19,13 @@ config/name="Sputtery Spaceship"
 config/description="Sputtery Spaceship is a flappy bird style space shooter. Fight gravity and the oncoming enemies to stay alive as long as you possibly can!"
 run/main_scene="res://Game.tscn"
 boot_splash/image="res://splash_screen.png"
-config/icon="res://playerShip1_red.png"
+config/icon="res://Sputtery Spaceship - Play Store Icon.png"
 
 [display]
 
 window/size/height=575
 window/size/resizable=false
 window/stretch/mode="2d"
-window/stretch/aspect="keep"
 
 [input_devices]
 
