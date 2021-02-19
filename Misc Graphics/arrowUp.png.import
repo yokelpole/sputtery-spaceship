@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/Sputtery Spaceship - Play Store Icon.png-115189747b406fcfd7e10cb9985cea2f.stex"
+path="res://.import/arrowUp.png-f9ca63deceb734e511bc801b8c7c10f5.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Sputtery Spaceship - Play Store Icon.png"
-dest_files=[ "res://.import/Sputtery Spaceship - Play Store Icon.png-115189747b406fcfd7e10cb9985cea2f.stex" ]
+source_file="res://Misc Graphics/arrowUp.png"
+dest_files=[ "res://.import/arrowUp.png-f9ca63deceb734e511bc801b8c7c10f5.stex" ]
 
 [params]
 

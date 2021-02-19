@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/arrowUp.png-40a62eacba743cc81bcff6c007b35710.stex"
+path="res://.import/space.png-7316c4ce2785a9754e6ebe37f96356ad.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://arrowUp.png"
-dest_files=[ "res://.import/arrowUp.png-40a62eacba743cc81bcff6c007b35710.stex" ]
+source_file="res://Misc Graphics/space.png"
+dest_files=[ "res://.import/space.png-7316c4ce2785a9754e6ebe37f96356ad.stex" ]
 
 [params]
 

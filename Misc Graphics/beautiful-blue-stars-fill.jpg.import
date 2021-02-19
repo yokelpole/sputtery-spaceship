@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/beautiful-blue-stars-fill.jpg-b9a6cdce2a098b9858df0c47568f24fe.stex"
+path="res://.import/beautiful-blue-stars-fill.jpg-60f8ede2f9b6dfb5243e508f99365997.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://beautiful-blue-stars-fill.jpg"
-dest_files=[ "res://.import/beautiful-blue-stars-fill.jpg-b9a6cdce2a098b9858df0c47568f24fe.stex" ]
+source_file="res://Misc Graphics/beautiful-blue-stars-fill.jpg"
+dest_files=[ "res://.import/beautiful-blue-stars-fill.jpg-60f8ede2f9b6dfb5243e508f99365997.stex" ]
 
 [params]
 

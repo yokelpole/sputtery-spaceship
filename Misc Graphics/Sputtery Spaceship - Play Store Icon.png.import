@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/playerShip1_red.png-5aabf9aaf2e3c57c41e14164bcd14537.stex"
+path="res://.import/Sputtery Spaceship - Play Store Icon.png-4de1cac84ccd70a4392440555b75f7db.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://playerShip1_red.png"
-dest_files=[ "res://.import/playerShip1_red.png-5aabf9aaf2e3c57c41e14164bcd14537.stex" ]
+source_file="res://Misc Graphics/Sputtery Spaceship - Play Store Icon.png"
+dest_files=[ "res://.import/Sputtery Spaceship - Play Store Icon.png-4de1cac84ccd70a4392440555b75f7db.stex" ]
 
 [params]
 

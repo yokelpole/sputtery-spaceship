@@ -3,11 +3,11 @@ extends Node2D
 var SCREEN_WIDTH = ProjectSettings.get_setting("display/window/size/width")
 var SCREEN_HEIGHT = ProjectSettings.get_setting("display/window/size/height")
 
-var Player = preload("res://Player.tscn")
-var Enemy = preload("res://Enemy.tscn")
-var SmarterEnemy = preload("res://SmarterEnemy.tscn")
-var Asteroid = preload("res://Asteroid.tscn")
-var Bullet = preload("res://Bullet.tscn")
+var Player = preload("res://Scenes/Player.tscn")
+var Enemy = preload("res://Scenes/Enemy.tscn")
+var SmarterEnemy = preload("res://Scenes/SmarterEnemy.tscn")
+var Asteroid = preload("res://Scenes/Asteroid.tscn")
+var Bullet = preload("res://Scenes/Bullet.tscn")
 
 var background_updates = 0
 var player = null

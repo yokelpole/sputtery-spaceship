@@ -1,32 +1,33 @@
 [gd_scene load_steps=18 format=2]
 
-[ext_resource path="res://ShipBody.gd" type="Script" id=1]
-[ext_resource path="res://playerShip1_red.png" type="Texture" id=2]
-[ext_resource path="res://Simple explosion/simpleExplosion07.png" type="Texture" id=3]
-[ext_resource path="res://Simple explosion/simpleExplosion06.png" type="Texture" id=4]
-[ext_resource path="res://Simple explosion/simpleExplosion05.png" type="Texture" id=5]
-[ext_resource path="res://Simple explosion/simpleExplosion01.png" type="Texture" id=6]
-[ext_resource path="res://Simple explosion/simpleExplosion04.png" type="Texture" id=7]
-[ext_resource path="res://Simple explosion/simpleExplosion08.png" type="Texture" id=8]
+[ext_resource path="res://Scripts/ShipBody.gd" type="Script" id=1]
+[ext_resource path="res://Rocket Fire/fire06.png" type="Texture" id=2]
+[ext_resource path="res://Simple explosion/simpleExplosion01.png" type="Texture" id=3]
+[ext_resource path="res://Simple explosion/simpleExplosion07.png" type="Texture" id=4]
+[ext_resource path="res://Misc Graphics/playerShip1_red.png" type="Texture" id=5]
+[ext_resource path="res://Simple explosion/simpleExplosion03.png" type="Texture" id=6]
+[ext_resource path="res://Simple explosion/simpleExplosion08.png" type="Texture" id=7]
+[ext_resource path="res://Simple explosion/simpleExplosion00.png" type="Texture" id=8]
 [ext_resource path="res://Simple explosion/simpleExplosion02.png" type="Texture" id=9]
-[ext_resource path="res://Simple explosion/simpleExplosion03.png" type="Texture" id=10]
-[ext_resource path="res://Simple explosion/simpleExplosion00.png" type="Texture" id=11]
-[ext_resource path="res://Rocket Fire/fire06.png" type="Texture" id=12]
+[ext_resource path="res://Simple explosion/simpleExplosion06.png" type="Texture" id=10]
+[ext_resource path="res://Simple explosion/simpleExplosion05.png" type="Texture" id=11]
+[ext_resource path="res://Simple explosion/simpleExplosion04.png" type="Texture" id=12]
 [ext_resource path="res://Rocket Fire/fire07.png" type="Texture" id=13]
 [ext_resource path="res://Sounds/laser5.ogg" type="AudioStream" id=14]
 [ext_resource path="res://Sounds/rumble3.ogg" type="AudioStream" id=15]
 
-[sub_resource type="SpriteFrames" id=2]
+
+[sub_resource type="SpriteFrames" id=1]
 animations = [ {
-"frames": [ ExtResource( 12 ), ExtResource( 13 ) ],
+"frames": [ ExtResource( 2 ), ExtResource( 13 ) ],
 "loop": true,
 "name": "rocket",
 "speed": 10.0
 } ]
 
-[sub_resource type="SpriteFrames" id=3]
+[sub_resource type="SpriteFrames" id=2]
 animations = [ {
-"frames": [ ExtResource( 11 ), ExtResource( 6 ), ExtResource( 9 ), ExtResource( 10 ), ExtResource( 7 ), ExtResource( 5 ), ExtResource( 4 ), ExtResource( 3 ), ExtResource( 8 ) ],
+"frames": [ ExtResource( 8 ), ExtResource( 3 ), ExtResource( 9 ), ExtResource( 6 ), ExtResource( 12 ), ExtResource( 11 ), ExtResource( 10 ), ExtResource( 4 ), ExtResource( 7 ) ],
 "loop": false,
 "name": "boom",
 "speed": 5.0
@@ -52,25 +53,25 @@ modulate = Color( 1, 0, 0, 1 )
 position = Vector2( 99, 36 )
 rotation = 1.5708
 z_index = 6
-texture = ExtResource( 2 )
+texture = ExtResource( 5 )
 
 [node name="PlayerSprite" type="Sprite" parent="."]
 position = Vector2( 99, 36 )
 rotation = 1.5708
-texture = ExtResource( 2 )
+texture = ExtResource( 5 )
 
 [node name="PlayerRocket" type="AnimatedSprite" parent="PlayerSprite"]
 visible = false
 position = Vector2( -0.790695, 47.8104 )
 rotation = 3.14159
-frames = SubResource( 2 )
+frames = SubResource( 1 )
 animation = "rocket"
 playing = true
 
 [node name="ExplosionSprite" type="AnimatedSprite" parent="."]
 visible = false
 position = Vector2( 101.424, 38.1302 )
-frames = SubResource( 3 )
+frames = SubResource( 2 )
 animation = "boom"
 speed_scale = 3.0
 
