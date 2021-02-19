@@ -1,4 +1,4 @@
-![Splash screen](splash_screen.png)
+![Splash screen](./Misc%20Graphics/splash_screen.png)
 
 **Sputtery Spaceship** is a Flappy Bird inspired endless space shooter built with [Godot](https://godotengine.org/) and using [Kenney Assets](https://kenney.nl/assets) for graphics and sound.
 
